@@ -1,0 +1,188 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#**linear algebra review**
+
+This post goes through the linear algebra review and reference section notes from the Stanford CS229 Machine Learning course posted [here](http://cs229.stanford.edu/section/cs229-linalg.pdf).
+
+##**2.1 vector-vector products**
+### **inner (dot) product**
+Given $x,y \in \mathbf{R}^n$, $x^Ty \in \mathbf{R}$ is the ***inner product***, aka ***dot product***.
+$$
+\begin{align}
+x^Ty \in \mathbf{R} = \begin{bmatrix} x_1 & x_2 & \cdots & x_n \end{bmatrix} \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix} & = \sum_{i=1}^{n}x_i y_i \\
+& = \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} \\
+& = y^Tx
+\end{align}
+$$
+Therefore, $x^Ty = y^Tx$ is always true.
+
+### **outer product**
+Given $x \in \mathbf{R}^m, y \in \mathbf{R}^n$, $xy^T \in \mathbf{R}^{m \times n}$ is the ***outer product***.
+
+$$
+xy^T \in \mathbf{R}^{m \times n} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{bmatrix} \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} = 
+\begin{bmatrix}
+x_1y_1 & x_1y_2 & \cdots & x_1y_n \\
+x_2y_1 & x_2y_2 & \cdots & x_2y_n \\
+\vdots & \vdots & \ddots & \vdots \\
+x_my_1 & x_my_2 & \cdots & x_my_n
+\end{bmatrix}
+$$
+
+The cs229 notes give an example of how the outer product with a vector of ones $\mathbf{1} \in \mathbf{R}^n$ can be used to give a compact representation of a matrix $A \in \mathbf{R}^{m \times n}$ whose columns are all equal to a vector $x \in \mathbf{R}^m$:
+
+$$
+A = \begin{bmatrix}
+    \mid  & \mid  &         & \mid  \\
+    x     & x     & \cdots  & x     \\
+    \mid  & \mid  &         & \mid  
+    \end{bmatrix}
+  = \begin{bmatrix}
+  x_1     &   x_1     & \cdots  & x_1     \\
+  x_2     &   x_2     & \cdots  & x_2     \\
+  \vdots  &   \vdots  & \ddots  & \vdots  \\
+  x_m     &   x_m     & \cdots  & x_m
+  \end{bmatrix}
+  = \begin{bmatrix}
+  x_1 \\ x_2 \\ \vdots \\ x_m
+  \end{bmatrix}
+  \begin{bmatrix}
+  1 & 1 & \cdots & 1
+  \end{bmatrix}
+  = x \mathbf{1}^T
+$$
+
+The [Deep Learning Book](http://www.deeplearningbook.org/) section 2.1 describes the use of an unconventional notation called *broadcasting* where the addition of a matrix and a vector to yield another matrix is allowed: $C = A + b$, where $C_{i,j} = A_{i,j} + b_j$. $\left( C \in \mathbf{R}^{m \times n}, A \in \mathbf{R}^{m \times n}, b \in \mathbf{R}^n \right)$ Explicitly writing this out:
+
+$$
+\begin{align}
+C = \begin{bmatrix}
+    A_{1,1} & A_{1,2} & \cdots  & A_{1,n} \\
+    A_{2,1} & A_{2,2} & \cdots  & A_{2,n} \\
+    \vdots  & \vdots  & \ddots  & \vdots  \\
+    A_{m,1} & A_{m,2} & \cdots  & A_{m,n}
+    \end{bmatrix}
+    + \begin{bmatrix}
+    b_1 \\ b_2 \\ \vdots \\ b_n
+    \end{bmatrix}
+    & = \begin{bmatrix}
+    A_{1,1} + b_1 & A_{1,2} + b_2 & \cdots  & A_{1,n} + b_n \\
+    A_{2,1} + b_1 & A_{2,2} + b_2 & \cdots  & A_{2,n} + b_n \\
+    \vdots        & \vdots        & \ddots  & \vdots        \\
+    A_{m,1} + b_1 & A_{m,2} + b_2 & \cdots  & A_{m,n} + b_n
+    \end{bmatrix} \\
+    & = A + \begin{bmatrix}
+    b_1     & b_2     & \cdots    & b_n     \\
+    b_1     & b_2     & \cdots    & b_n     \\
+    \vdots  & \vdots  & \ddots    & \vdots  \\
+    b_1     & b_2     & \cdots    & b_n
+    \end{bmatrix} \\
+    & = A + (b \mathbf{1}^T)^T \\
+    & = A + 1b^T
+\end{align}
+$$
+So, the shorthand $C = A + b$ can be written more explicitly (but still pretty compactly) as $C = A + \mathbf{1}b^T$, where $\mathbf{1} \in \mathbf{R}^m$
+
+##**2.2 matrix-vector products**
+Given a matrix $A \in \mathbf{R}^{m \times n}$ and a vector $x \in \mathbf{R}^n$, their product is a vector $y = Ax \in \mathbf{R}^m$. The CS229 notes go through some different representations of the product:
+
+### **representing A as rows**
+$$
+y = Ax =  \begin{bmatrix}
+          - & a_1^T   & - \\
+          - & a_2^T   & - \\
+            & \vdots  &        \\
+          - & a_m^T   & - \\
+          \end{bmatrix} x
+      =   \begin{bmatrix}
+          a_1^Tx \\
+          a_2^Tx \\
+          \vdots \\
+          a_m^Tx
+          \end{bmatrix}
+$$
+
+That is, the $i$th entry of $y$ is the inner product of the $i$th row of $A$ and $x$, $y_i = a_i^Tx$.
+
+Recalling that the inner product is a similarity measure, $y$ can be interpreted as a list of how similar each row of $A$ is to $x$. This is illustrated below, with the rows of the matrix $A = \begin{bmatrix}6 & 0 \\ -3 & 4 \end{bmatrix}$ in black and the vector $x=\begin{bmatrix}5 \\ 1 \end{bmatrix}$ in red.
+```{r echo=FALSE, fig.width = 4.5, fig.asp=1, fig.align='center'}
+A = matrix(c(6,-3,0,4), nrow = 2, ncol = 2)
+x = matrix(c(5, 1), nrow = 2, ncol = 1)
+y = A %*% x
+p = plot(A, ylim = c(-1,5), xlab = "", ylab = "", asp = 1, cex=0)
+grid()
+invisible(p)
+arrows(0,0,A[1,1], A[1,2], length = .15 ,lwd = 3)
+arrows(0,0,A[2,1], A[2,2], length = .15, lwd = 3)
+arrows(0,0,x[1], x[2], length = .15, lwd = 3, col = "red")
+```
+Here $y = Ax = \begin{bmatrix} 30 \\ -11 \end{bmatrix}$, reflecting the fact that $x=\begin{bmatrix}5 \\ 1 \end{bmatrix}$ is more similar to $a_1=\begin{bmatrix}6 \\ 0 \end{bmatrix}$ than it is to $a_2=\begin{bmatrix}-3 \\ 4 \end{bmatrix}$
+
+### **representing A as columns**
+$$
+y = Ax =  \begin{bmatrix}
+          \mid  & \mid  &         & \mid  \\
+          a_1   & a_2   & \cdots  & a_n   \\
+          \mid  & \mid  &         & \mid
+          \end{bmatrix}
+          \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix}
+          = \begin{bmatrix} \mid \\ a_1 \\ \mid \end{bmatrix} x_1
+          + \begin{bmatrix} \mid \\ a_2 \\ \mid \end{bmatrix} x_2
+          + \dots
+          + \begin{bmatrix} \mid \\ a_n \\ \mid \end{bmatrix} x_n
+$$
+
+That is, y is a ***linear combination*** of the columns of $A$, where the coefficients of the linear combination are the entries of $x$.
+
+This is illustrated below, with the matrix $A = \begin{bmatrix}4 & 1 \\ -2 & 2 \end{bmatrix}$ and $x=\begin{bmatrix} 3 \\ -2 \end{bmatrix}$.
+```{r echo=FALSE, fig.width = 4.5, fig.asp=1, fig.align='center'}
+A = matrix(c(4,-2,1,2), nrow = 2, ncol = 2)
+x = matrix(c(3, -2), nrow = 2, ncol = 1)
+y = A %*% x
+p = plot(A, xlim = c(0,13), ylim = c(-11,0), xlab="", ylab="", asp=1)
+grid()
+invisible(p)
+arrows(0,0,4,-2, length = .15, lwd=3)
+arrows(4,-2,8,-4, length = .15, lwd=3)
+arrows(8,-4,12,-6, length = .15, lwd=3)
+arrows(12,-6,11,-8, length = .15, lwd=3, col="red")
+arrows(11,-8,10,-10, length = .15, lwd=3, col="red")
+```
+Here $y = Ax = \begin{bmatrix} 10 \\ -10  \end{bmatrix} = \begin{bmatrix}4 \\ -2 \end{bmatrix}(3) + \begin{bmatrix}1 \\ 2 \end{bmatrix}$, representing the point in $\mathbf{R}^m$ reached after taking $x_1=3$ "steps" of $a_1=\begin{bmatrix}4 \\ -2 \end{bmatrix}(3)$ drawn as black vectors plus $x_2=-2$ "steps" of $a_2=\begin{bmatrix}1 \\ 2 \end{bmatrix}$ drawn as red vectors.
+
+Analogous cases occur in the left multiplication of a matrix by a row vector, $y^T=x^TA$ for $A \in \mathbf{R}^{m \times n}, x \in \mathbf{R}^m$, and $y \in \mathbf{R}^n$.
+$$
+y^T = x^TA = x^T \begin{bmatrix}
+          \mid  & \mid  &         & \mid  \\
+          a_1   & a_2   & \cdots  & a_n   \\
+          \mid  & \mid  &         & \mid
+          \end{bmatrix}
+          = \begin{bmatrix} x^Ta_1 &  x^Ta_2 & \cdots & x^Ta_n \end{bmatrix}
+$$
+Showing that the $i$th entry of $y^T$ is the inner product of $x$ and the $i$th column of A.
+
+$$
+\begin{align}
+y^T & = x^TA \\
+    & = \begin{bmatrix}x_1 & x_2 & \cdots & x_n \end{bmatrix}
+    \begin{bmatrix}
+          - & a_1^T   & - \\
+          - & a_2^T   & - \\
+            & \vdots  &   \\
+          - & a_m^T   & - \\
+    \end{bmatrix} \\
+    & = x_1 \begin{bmatrix}-& a_1^T & - \end{bmatrix}
+      + x_2 \begin{bmatrix}-& a_2^T & - \end{bmatrix}
+      + \dots
+      + x_n \begin{bmatrix}-& a_n^T & - \end{bmatrix}
+\end{align}
+$$
+So $y^T$ is a linear combination of the rows of $A$, where the coefficients of the linear combination are given by the entries of $x$.
+
+##**2.3 matrix-matrix products**
