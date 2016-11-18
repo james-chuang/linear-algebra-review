@@ -8,7 +8,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #**linear algebra review**
 
-This post goes through the linear algebra review and reference section notes from the Stanford CS229 Machine Learning course posted [here](http://cs229.stanford.edu/section/cs229-linalg.pdf).
+This post goes through the linear algebra review and reference section notes from the Stanford CS229 Machine Learning course posted [here](http://cs229.stanford.edu/section/cs229-linalg.pdf). This is not meant to be comprehensive, it's things in the notes I didn't understand at first and things I thought were important.
 
 ##**2.1 vector-vector products**
 ### **inner (dot) product**
@@ -186,3 +186,145 @@ $$
 So $y^T$ is a linear combination of the rows of $A$, where the coefficients of the linear combination are given by the entries of $x$.
 
 ##**2.3 matrix-matrix products**
+The product of two matrices $A \in \mathbf{R}^{m \times n}$ and $B \in \mathbf{R}^{n \times p}$ is the matrix
+$$
+C = AB \in \mathbf{R}^{m \times p},
+$$
+where
+$$
+C_{i,j} = \sum_{k=1}^{n}A_{i,k}B_{k,j}
+$$
+This is ***not*** the same as a matrix containing the product of individual elements. That is the *element-wise*, or *Hadamard product*, denoted $A \odot B$.
+
+The cs229 notes go through four different ways of viewing matrix multiplication.
+
+First, matrix-matrix multiplication as a set of vector-vector products, where $A$ is represented by rows and $B$ is represented by columns. This is the way that matrix multiplication is usually taught.
+$$
+C = AB =  \begin{bmatrix}
+          - & a_1^T   & - \\
+          - & a_2^T   & - \\
+            & \vdots  &   \\
+          - & a_m^T   & - 
+          \end{bmatrix}
+          \begin{bmatrix}
+          \mid  & \mid  &         & \mid  \\
+          b_1   & b_2   & \cdots  & b_p   \\
+          \mid  & \mid  &         & \mid
+          \end{bmatrix}
+          =
+          \begin{bmatrix}
+          a_1^Tb_1  & a_1^Tb_2  & \cdots  & a_1^Tb_p  \\
+          a_2^Tb_1  & a_2^Tb_2  & \cdots  & a_2^Tb_p  \\
+          \vdots    & \vdots    & \ddots  & \vdots    \\
+          a_m^Tb_1  & a_m^Tb_2  & \cdots  & a_m^Tb_p 
+          \end{bmatrix}
+$$
+
+Next, representing $A$ by columns and $B$ by rows:
+$$
+C = AB =  \begin{bmatrix}
+          \mid  & \mid  &         & \mid  \\
+          a_1   & a_2   & \cdots  & a_p   \\
+          \mid  & \mid  &         & \mid
+          \end{bmatrix}
+          \begin{bmatrix}
+          - & b_1^T   & - \\
+          - & b_2^T   & - \\
+            & \vdots  &   \\
+          - & b_m^T   & - 
+          \end{bmatrix}
+          = \sum_{i=1}^n a_i b_i^T
+$$
+This representation is not as intuitive. Conceptually, it calculating the matrix by summing together $n$ matrices where each entry is the $i$th element of the sum in each element of $C$. This is in contrast to the canonical representation above, in which you go element by element in $C$ and calculate the sum for each element individually.
+
+Matrix-matrix multiplication can also be represented as a set of matrix-vector products. Representing $B$ by columns:
+$$
+C = AB = A  \begin{bmatrix}
+            \mid  & \mid  &         & \mid  \\
+            b_1   & b_2   & \cdots  & b_p   \\
+            \mid  & \mid  &         & \mid
+            \end{bmatrix}
+            =
+            \begin{bmatrix}
+            \mid    & \mid    &         & \mid    \\
+            Ab_1    & Ab_2    & \cdots  & Ab_p    \\
+            \mid    & \mid    &         & \mid
+            \end{bmatrix}
+$$
+Each column in $C$ can then be interpreted as in section 2.2 on matrix-vector products.
+
+Representing $A$ by rows:
+$$
+C = AB = \begin{bmatrix}
+          - & a_1^T   & - \\
+          - & a_2^T   & - \\
+            & \vdots  &   \\
+          - & a_m^T   & - 
+          \end{bmatrix}
+          B
+          = 
+          \begin{bmatrix}
+          - & a_1^TB  & - \\
+          - & a_2^TB  & - \\
+            & \vdots  &   \\
+          - & a_m^TB  & - 
+          \end{bmatrix}
+$$
+
+## **3.2 the transpose**
+Some properties:
+
+- $(AB)^T = B^TA^T$
+
+This property, along with the fact that a scalar is equal to its own transpose, can be used to show that the dot product is commutative:
+
+$$
+x^Ty=(x^Ty)^T = y^Tx
+$$
+
+- $(A+B)^T = A^T+B^T$
+
+## **3.3 symmetric matrices**
+A square matrix $A \in \mathbf{R}^{n \times n}$ is *symmetric* if $A=A^T$. It is anti-symmetric if $A=-A^T$.
+
+For any matrix $A \in \mathbf{R}^{n \times n}$, the matrix $A + A^T$ is symmetric:
+$$
+\begin{align}
+A + A^T & = \begin{bmatrix}
+            A_{1,1} & A_{1,2} & \cdots  & A_{1,n} \\
+            A_{2,1} & A_{2,2} & \cdots  & A_{2,n} \\
+            \vdots  & \vdots  & \ddots  & \vdots  \\
+            A_{n,1} & A_{n,2} & \cdots  & A_{n,n}
+            \end{bmatrix}
+            +
+            \begin{bmatrix}
+            A_{1,1} & A_{2,1} & \cdots  & A_{n,1} \\
+            A_{1,2} & A_{2,2} & \cdots  & A_{n,2} \\
+            \vdots  & \vdots  & \ddots  & \vdots  \\
+            A_{1,n} & A_{2,n} & \cdots  & A_{n,n}
+            \end{bmatrix} \\
+        & = \begin{bmatrix}
+            2A_{1,1}          & A_{1,2} + A_{2,1} & \cdots  & A_{1,n} + A_{n,1} \\
+            A_{2,1} + A_{1,2} & 2A_{2,2}          & \cdots  & A_{2,n} + A_{n,2} \\
+            \vdots  & \vdots  & \ddots            & \vdots                      \\
+            A_{n,1} + A_{1,n} & A_{n,2} + A_{2,n} & \cdots  & 2A_{n,n}
+            \end{bmatrix}
+\end{align}
+$$
+, which is symmetric due to commutativity of addition.
+
+Similarly, the matrix $A - A^T$ is anti-symmetric.
+
+From these properties, it follows that any square matrix $A \in \mathbf{R}^{n \times n}$ can be represented as a sum of a symmetric matrix and an anti-symmetric matrix:
+$$
+A = \frac{1}{2}\left(A+A^T\right)+ \frac{1}{2}\left(A-A^T\right)
+$$
+
+Symmetric matrices have nice properties and occur often, particularly when they are generated by a function of two arguments that does not depend on the order of the arguments (e.g. a distance measure between two points). The set of all symmetric matrices of size $n$ can be denoted as $\mathbf{S}^n$.
+
+## **3.4 the trace **
+The ***trace*** of a square matrix $A \in \mathbf{R}^{n \times n}$, denoted $\text{tr}(A)$ or $\text{tr}A$, is the sum of diagonal elements n the matrix:
+
+$$
+\text{tr}A = \sum_{i=1}^n A_{i,i}
+$$
