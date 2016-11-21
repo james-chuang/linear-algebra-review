@@ -347,7 +347,7 @@ $$
 
 Note that the squared $L^2$ norm $\|x\|_2^2 = x^Tx$. The squared $L^2$ norm is more convenient to work with mathematically and computationally than the $L^2$ norm itself.
 
-The $L^2$ norm increases slowly near the origin. When it is important to discriminate between elements that are exactly zero and elements that are small but non-zero, the $L_1$ norm is often used because it increases at the same rate in all locations:
+The $L^2$ norm increases slowly near the origin. When it is important to discriminate between elements that are exactly zero and elements that are small but non-zero, the $L^1$ norm is often used because it increases at the same rate in all locations:
 
 $$
 \|x\|_1 = \sum_{i=1}^n |x_i|
@@ -396,6 +396,8 @@ Some properties of the inverse for non-singular matrices $A,B \in \mathbb{R}^{n 
 - $(A^{-1})^{-1} = A$
 - $(AB)^{-1} = B^{-1}A^{-1}$
 - $(A^{-1})^{T} = (A^T)^{-1}$. This matrix is often denoted $A^{-T}$.
+
+When $A^{-1}$ exists, there are several algorithms for finding its closed form. However, because computers can only represent it with limited precision, $A^{-1}$ should not actually be used in practice for most software.
 
 ## **3.8 orthogonal matrices**
 Two vectors $x,y \in \mathbb{R}^n$ are ***orthogonal*** if $x^Ty = 0$ (thinking geometrically, remember that the dot product $= \|x\| \|y\| \cos\theta$, where $\theta$ is the angle between the two vectors). A vector $x \in \mathbb{R}^n$ is ***normalized*** if $\|x\|_2 = 1$.
@@ -450,5 +452,27 @@ $$
 $$
 If $\{x_1, \dots, x_n \}$ is a set of $n$ linearly independent vectors, where each $x_i \in \mathbb{R}^n$, then $\text{span}(\{x_1,\dots ,x_n \})=\mathbb{R}^n$. In other words, *any* vector $v \in \mathbb{R}^n$ can be written as a linear combination of $x_1$ through $x_n$.
 
-The ***projection*** of a vetor $y \in \mathbb{R}^m$ onto the span of $\{x_1, \dots, x_n \}$ (assuming $x_i \in \mathbb{R}^m$) is the vector $v \in \text{span}(\{x_1, \dots, x_n\})$ such that $v$ is as close as possible to $y$, as measured by the Euclidean norm $\|v-y\|_2$
+The ***projection*** of a vector $y \in \mathbb{R}^m$ onto the span of $\{x_1, \dots, x_n \}$ (assuming $x_i \in \mathbb{R}^m$) is the vector $v \in \text{span}(\{x_1, \dots, x_n\})$ such that $v$ is as close as possible to $y$, as measured by the Euclidean norm $\|v-y\|_2$. The projection is denoted $\text{Proj}(y; \{x_1,\dots,x_n\})$ and is defined
+
+$$
+\text{Proj}(y; \{x_1,\dots,x_n\}) = \text{argmin}_{v \in \text{span}(x_1, \dots, x_n)} \|y-v\|_2
+$$
+
+The ***range*** (aka the columnspace) of a matrix $A \in \mathbb{R}^{m \times n}$, denoted $\mathcal{R}(A)$, is the span of the columns of $A$. That is,
+$$
+\mathcal{R}(A) = \left\{v \in \mathbb{R}^m : v=Ax, x \in \mathbb{R}^n \right\}
+$$
+
+Making a few technical assumptions (namely that $A$ is full rank and that $n < m$), the projection of a vector $y \in \mathbb{R}^m$ onto the range of $A$ is given by
+$$
+\text{Proj}(y; A) = \text{argmin}_{v \in \mathcal{R}(A)} \|v-y \|_2 = A(A^TA)^{-1}A^Ty
+$$
+
+The ***nullspace*** of a matrix $A \in \mathbb{R}^{m \times n}$, denoted $\mathcal{N}(A)$, is the set of all vectors that equal $0$ when multiplied by $A$, i.e.,
+$$
+\mathcal{N}(A) = \left\{x \in \mathbb{R}^n : Ax=0 \right\}
+$$
+
+## **3.10 the determinant**
+
 
