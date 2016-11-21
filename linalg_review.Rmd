@@ -12,10 +12,10 @@ This post goes through the linear algebra review and reference section notes fro
 
 ##**2.1 vector-vector products**
 ### **inner (dot) product**
-Given $x,y \in \mathbf{R}^n$, $x^Ty \in \mathbf{R}$ is the ***inner product***, aka ***dot product***.
+Given $x,y \in \mathbb{R}^n$, $x^Ty \in \mathbb{R}$ is the ***inner product***, aka ***dot product***.
 $$
 \begin{align}
-x^Ty \in \mathbf{R} = \begin{bmatrix} x_1 & x_2 & \cdots & x_n \end{bmatrix} \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix} & = \sum_{i=1}^{n}x_i y_i \\
+x^Ty \in \mathbb{R} = \begin{bmatrix} x_1 & x_2 & \cdots & x_n \end{bmatrix} \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix} & = \sum_{i=1}^{n}x_i y_i \\
 & = \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} \\
 & = y^Tx
 \end{align}
@@ -23,10 +23,10 @@ $$
 Therefore, $x^Ty = y^Tx$ is always true.
 
 ### **outer product**
-Given $x \in \mathbf{R}^m, y \in \mathbf{R}^n$, $xy^T \in \mathbf{R}^{m \times n}$ is the ***outer product***.
+Given $x \in \mathbb{R}^m, y \in \mathbb{R}^n$, $xy^T \in \mathbb{R}^{m \times n}$ is the ***outer product***.
 
 $$
-xy^T \in \mathbf{R}^{m \times n} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{bmatrix} \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} = 
+xy^T \in \mathbb{R}^{m \times n} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{bmatrix} \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} = 
 \begin{bmatrix}
 x_1y_1 & x_1y_2 & \cdots & x_1y_n \\
 x_2y_1 & x_2y_2 & \cdots & x_2y_n \\
@@ -35,7 +35,7 @@ x_my_1 & x_my_2 & \cdots & x_my_n
 \end{bmatrix}
 $$
 
-The cs229 notes give an example of how the outer product with a vector of ones $\mathbf{1} \in \mathbf{R}^n$ can be used to give a compact representation of a matrix $A \in \mathbf{R}^{m \times n}$ whose columns are all equal to a vector $x \in \mathbf{R}^m$:
+The cs229 notes give an example of how the outer product with a vector of ones $\mathbf{1} \in \mathbb{R}^n$ can be used to give a compact representation of a matrix $A \in \mathbb{R}^{m \times n}$ whose columns are all equal to a vector $x \in \mathbb{R}^m$:
 
 $$
 A = \begin{bmatrix}
@@ -58,7 +58,7 @@ A = \begin{bmatrix}
   = x \mathbf{1}^T
 $$
 
-The [Deep Learning Book](http://www.deeplearningbook.org/) section 2.1 describes the use of an unconventional notation called *broadcasting* where the addition of a matrix and a vector to yield another matrix is allowed: $C = A + b$, where $C_{i,j} = A_{i,j} + b_j$. $\left( C \in \mathbf{R}^{m \times n}, A \in \mathbf{R}^{m \times n}, b \in \mathbf{R}^n \right)$ Explicitly writing this out:
+The [Deep Learning Book](http://www.deeplearningbook.org/) section 2.1 describes the use of an unconventional notation called *broadcasting* where the addition of a matrix and a vector to yield another matrix is allowed: $C = A + b$, where $C_{i,j} = A_{i,j} + b_j$. $\left( C \in \mathbb{R}^{m \times n}, A \in \mathbb{R}^{m \times n}, b \in \mathbb{R}^n \right)$ Explicitly writing this out:
 
 $$
 \begin{align}
@@ -87,10 +87,10 @@ C = \begin{bmatrix}
     & = A + 1b^T
 \end{align}
 $$
-So, the shorthand $C = A + b$ can be written more explicitly (but still pretty compactly) as $C = A + \mathbf{1}b^T$, where $\mathbf{1} \in \mathbf{R}^m$
+So, the shorthand $C = A + b$ can be written more explicitly (but still pretty compactly) as $C = A + \mathbf{1}b^T$, where $\mathbf{1} \in \mathbb{R}^m$
 
 ##**2.2 matrix-vector products**
-Given a matrix $A \in \mathbf{R}^{m \times n}$ and a vector $x \in \mathbf{R}^n$, their product is a vector $y = Ax \in \mathbf{R}^m$. The CS229 notes go through some different representations of the product:
+Given a matrix $A \in \mathbb{R}^{m \times n}$ and a vector $x \in \mathbb{R}^n$, their product is a vector $y = Ax \in \mathbb{R}^m$. The CS229 notes go through some different representations of the product:
 
 ### **representing A as rows**
 $$
@@ -154,9 +154,10 @@ arrows(8,-4,12,-6, length = .15, lwd=3)
 arrows(12,-6,11,-8, length = .15, lwd=3, col="red")
 arrows(11,-8,10,-10, length = .15, lwd=3, col="red")
 ```
-Here $y = Ax = \begin{bmatrix} 10 \\ -10  \end{bmatrix} = \begin{bmatrix}4 \\ -2 \end{bmatrix}(3) + \begin{bmatrix}1 \\ 2 \end{bmatrix}$, representing the point in $\mathbf{R}^m$ reached after taking $x_1=3$ "steps" of $a_1=\begin{bmatrix}4 \\ -2 \end{bmatrix}(3)$ drawn as black vectors plus $x_2=-2$ "steps" of $a_2=\begin{bmatrix}1 \\ 2 \end{bmatrix}$ drawn as red vectors.
+Here $y = Ax = \begin{bmatrix} 10 \\ -10  \end{bmatrix} = \begin{bmatrix}4 \\ -2 \end{bmatrix}(3) + \begin{bmatrix}1 \\ 2 \end{bmatrix}(-2)$, representing the point in $\mathbb{R}^m$ reached after taking $x_1=3$ "steps" of $a_1=\begin{bmatrix}4 \\ -2 \end{bmatrix}$ drawn as black vectors plus $x_2=-2$ "steps" of $a_2=\begin{bmatrix}1 \\ 2 \end{bmatrix}$ drawn as red vectors.
 
-Analogous cases occur in the left multiplication of a matrix by a row vector, $y^T=x^TA$ for $A \in \mathbf{R}^{m \times n}, x \in \mathbf{R}^m$, and $y \in \mathbf{R}^n$.
+##
+Analogous cases occur in the left multiplication of a matrix by a row vector, $y^T=x^TA$ for $A \in \mathbb{R}^{m \times n}, x \in \mathbb{R}^m$, and $y \in \mathbb{R}^n$.
 $$
 y^T = x^TA = x^T \begin{bmatrix}
           \mid  & \mid  &         & \mid  \\
@@ -186,9 +187,9 @@ $$
 So $y^T$ is a linear combination of the rows of $A$, where the coefficients of the linear combination are given by the entries of $x$.
 
 ##**2.3 matrix-matrix products**
-The product of two matrices $A \in \mathbf{R}^{m \times n}$ and $B \in \mathbf{R}^{n \times p}$ is the matrix
+The product of two matrices $A \in \mathbb{R}^{m \times n}$ and $B \in \mathbb{R}^{n \times p}$ is the matrix
 $$
-C = AB \in \mathbf{R}^{m \times p},
+C = AB \in \mathbb{R}^{m \times p},
 $$
 where
 $$
@@ -235,7 +236,7 @@ C = AB =  \begin{bmatrix}
           \end{bmatrix}
           = \sum_{i=1}^n a_i b_i^T
 $$
-This representation is not as intuitive. Conceptually, it calculating the matrix by summing together $n$ matrices where each entry is the $i$th element of the sum in each element of $C$. This is in contrast to the canonical representation above, in which you go element by element in $C$ and calculate the sum for each element individually.
+This representation is not as intuitive. Conceptually, it calculating the matrix by summing together $n$ matrices where each entry is the $i$th element of the sum in each element of $C$. This is in contrast to the canonical representation above, in which you go element by element in $C$ and calculate the entire sum for each element individually.
 
 Matrix-matrix multiplication can also be represented as a set of matrix-vector products. Representing $B$ by columns:
 $$
@@ -285,9 +286,9 @@ $$
 - $(A+B)^T = A^T+B^T$
 
 ## **3.3 symmetric matrices**
-A square matrix $A \in \mathbf{R}^{n \times n}$ is *symmetric* if $A=A^T$. It is anti-symmetric if $A=-A^T$.
+A square matrix $A \in \mathbb{R}^{n \times n}$ is *symmetric* if $A=A^T$. It is anti-symmetric if $A=-A^T$.
 
-For any matrix $A \in \mathbf{R}^{n \times n}$, the matrix $A + A^T$ is symmetric:
+For any matrix $A \in \mathbb{R}^{n \times n}$, the matrix $A + A^T$ is symmetric:
 $$
 \begin{align}
 A + A^T & = \begin{bmatrix}
@@ -315,16 +316,139 @@ $$
 
 Similarly, the matrix $A - A^T$ is anti-symmetric.
 
-From these properties, it follows that any square matrix $A \in \mathbf{R}^{n \times n}$ can be represented as a sum of a symmetric matrix and an anti-symmetric matrix:
+From these properties, it follows that any square matrix $A \in \mathbb{R}^{n \times n}$ can be represented as a sum of a symmetric matrix and an anti-symmetric matrix:
 $$
 A = \frac{1}{2}\left(A+A^T\right)+ \frac{1}{2}\left(A-A^T\right)
 $$
 
-Symmetric matrices have nice properties and occur often, particularly when they are generated by a function of two arguments that does not depend on the order of the arguments (e.g. a distance measure between two points). The set of all symmetric matrices of size $n$ can be denoted as $\mathbf{S}^n$.
+Symmetric matrices have nice properties and occur often, particularly when they are generated by a function of two arguments that does not depend on the order of the arguments (e.g. a distance measure between two points). The set of all symmetric matrices of size $n$ can be denoted as $\mathbb{S}^n$.
 
 ## **3.4 the trace **
-The ***trace*** of a square matrix $A \in \mathbf{R}^{n \times n}$, denoted $\text{tr}(A)$ or $\text{tr}A$, is the sum of diagonal elements n the matrix:
+The ***trace*** of a square matrix $A \in \mathbb{R}^{n \times n}$, denoted $\text{tr}(A)$ or $\text{tr}A$, is the sum of diagonal elements n the matrix:
 
 $$
 \text{tr}A = \sum_{i=1}^n A_{i,i}
 $$
+
+For $A, B, C$ such that $ABC$ is square, $\text{tr}ABC = \text{tr}BCA = \text{tr}CAB$, and so on for the product of more matrices. This holds even if the resulting products have different dimensions.
+
+## **3.5 norms**
+A ***norm*** of a vector $||x||$ is an informal measure of the length or size of a vector. The $L^p$ (also written as $\ell_p$) norm is parameterized by $p$ and defined as:
+
+$$
+\|x\|_p = \left(\sum_{i=1}^n |x_i|^p \right)^{1/p}
+$$
+
+The $L^2$ norm, aka the Euclidean norm, is commonly used and is the Euclidean distance from the origin to the point identified by $x$:
+
+$$
+\|x\|_2 = \sqrt{\sum_{i=1}^n x_i^2}
+$$
+
+Note that the squared $L^2$ norm $\|x\|_2^2 = x^Tx$. The squared $L^2$ norm is more convenient to work with mathematically and computationally than the $L^2$ norm itself.
+
+The $L^2$ norm increases slowly near the origin. When it is important to discriminate between elements that are exactly zero and elements that are small but non-zero, the $L_1$ norm is often used because it increases at the same rate in all locations:
+
+$$
+\|x\|_1 = \sum_{i=1}^n |x_i|
+$$
+
+Another norm is the $L^\infty$ norm, aka the max norm. This represents the absolute value of the element with the largest magnitude in the vector:
+
+$$
+\|x\|_\infty = \max_{i} |x_i|
+$$
+
+Norms can also be defined for matrices. In machine learning, the Frobenius norm is often used:
+
+$$
+\|A\|_F = \sqrt{\sum_{i=1}^m \sum_{j=1}^n A_{i,j}^2} = \sqrt{\text{tr}(A^TA)}
+$$
+
+## **3.6 linear independence and rank**
+A set of vectors $\{x_1, x_2, \dots, x_n \} \subset \mathbb{R}^m$ is ***linearly independent*** if no vector can be represented as a linear combination of the remaining vectors. That is, if 
+$$
+x_n = \sum_{i=1}^{n-1}\alpha_i x_i
+$$
+for some scalar values $\alpha_1, \dots, \alpha_{n-1} \in \mathbb{R}$, then the vectors $x_1, \dots, x_n$ are linearly dependent; otherwise, the vectors are linearly independent.
+
+The ***column rank*** of a matrix $A \in \mathbb{R}^{m \times n}$ is the size of the largest subset of columns of $A$ that constitute a linearly independent set. This often refers simply to the number of linearly independent columns of $A$. Similarly, the ***row rank*** is the largest number of rows of $A$ that constitute a linearly independent set. It turns out that for any matrix $A \in \mathbb{R}^{m \times n}$, the column rank of $A$ is equal to the row rank of $A$, and are referred to as the ***rank*** of $A$, $\text{rank}(A)$.
+
+Some properties of the rank:
+
+- For $A \in \mathbb{R}^{m \times n}, \text{rank}(A) \leq \min(m,n)$. If $\text{rank}(A) = \min(m,n)$, then $A$ is said to be ***full rank***.
+- For $A \in \mathbb{R}^{m \times n}, \text{rank}(A) = \text{rank}(A^T)$.
+- For $A \in \mathbb{R}^{m \times n}, B \in \mathbb{R}^{n \times p}, \text{rank}(AB) \leq \min(\text{rank}(A), \text{rank}(B))$.
+- For $A,B \in \mathbb{R}^{m \times n}, \text{rank}(A+B) \leq \text{rank}(A) + \text{rank}(B)$.
+
+## **3.7 the inverse**
+The ***inverse*** of a square matrix $A \in \mathbb{R}^{n \times n}$ is denoted $A^{-1}$, and is the unique matrix such that
+$$
+A^{-1}A = I = AA^{-1}
+$$
+
+Not all matrices have inverses. For example, non-square matrices by definition do not have inverses. A square matrix $A$ is ***invertible*** or ***non-singular*** if $A^{-1}$ exists and ***non-invertible*** or ***singular*** otherwise.
+
+In order for a square matrix $A$ to have an inverse $A^{-1}$, then $A$ must be full rank. There are many alternative sufficient and necessary conditions in addition to this for invertibility.
+
+Some properties of the inverse for non-singular matrices $A,B \in \mathbb{R}^{n \times n}$:
+
+- $(A^{-1})^{-1} = A$
+- $(AB)^{-1} = B^{-1}A^{-1}$
+- $(A^{-1})^{T} = (A^T)^{-1}$. This matrix is often denoted $A^{-T}$.
+
+## **3.8 orthogonal matrices**
+Two vectors $x,y \in \mathbb{R}^n$ are ***orthogonal*** if $x^Ty = 0$ (thinking geometrically, remember that the dot product $= \|x\| \|y\| \cos\theta$, where $\theta$ is the angle between the two vectors). A vector $x \in \mathbb{R}^n$ is ***normalized*** if $\|x\|_2 = 1$.
+
+A square matrix $U \in \mathbb{R}^{n \times n}$ is ***orthogonal*** if all its columns are ***orthonormal*** each other, i.e. the columns are orthogonal to each other and normalized. Using the definitions of orthogonality and normality,
+
+$$
+\begin{align}
+U^T U & = \begin{bmatrix}
+          - & u_1^T   & - \\
+          - & u_2^T   & - \\
+            & \vdots  &   \\
+          - & u_n^T   & - 
+          \end{bmatrix}
+          \begin{bmatrix}
+          \mid  & \mid  &         & \mid  \\
+          u_1   & u_2   & \cdots  & u_n   \\
+          \mid  & \mid  &         & \mid
+          \end{bmatrix} \\
+      & = \begin{bmatrix}
+          u_1^Tu_1  & u_1^Tu_2  & \cdots  & u_1^Tu_n  \\
+          u_2^Tu_1  & u_2^Tu_2  & \cdots  & u_2^Tu_n  \\
+          \vdots    & \vdots    & \ddots  & \vdots    \\
+          u_n^Tb_1  & u_n^Tu_2  & \cdots  & u_m^Tu_n 
+          \end{bmatrix} \\
+      & = \begin{bmatrix}
+          1       & 0       & \cdots  & 0       \\
+          0       & 1       & \cdots  & 0       \\
+          \vdots  & \vdots  & \ddots  & \vdots  \\ 
+          0       & 0       & \cdots  & 1
+          \end{bmatrix} \\
+      & = I
+\end{align}
+$$
+
+Similarly, $I = UU^T$, so
+$$
+U^TU = I = UU^T
+$$
+That is, the inverse of an orthogonal matrix is its transpose. Orthogonal matrices are thus useful, since computing the transpose of a matrix is much cheaper than computing its inverse. Note that the columns of an orthogonal matrix must be orthogonal **and** normalized. There is no special term for a matrix whose columns are orthogonal but not normal.
+
+A nice property of orthogonal matrices is that operating on a vector with an orthogonal matrix will not change its Euclidean norm, i.e.,
+$$
+\|Ux\|_2 = \|x\|_2
+$$
+for any $x \in \mathbb{R}^n, U \in \mathbb{R}^{n \times n}$ orthogonal.
+
+## **3.9 range and nullspace of a matrix**
+The ***span*** of a set of vectors $\{x_1, \dots, x_n\}$ is the set of all vectors that can be expressed as a linear combination of $\{x_1, \dots, x_n \}$. That is,
+$$
+\text{span}(\{x_1,\dots ,x_n \}) = \left\{v:v = \sum_{i=1}^n \alpha_i x_i, \alpha_i \in \mathbb{R} \right\}.
+$$
+If $\{x_1, \dots, x_n \}$ is a set of $n$ linearly independent vectors, where each $x_i \in \mathbb{R}^n$, then $\text{span}(\{x_1,\dots ,x_n \})=\mathbb{R}^n$. In other words, *any* vector $v \in \mathbb{R}^n$ can be written as a linear combination of $x_1$ through $x_n$.
+
+The ***projection*** of a vetor $y \in \mathbb{R}^m$ onto the span of $\{x_1, \dots, x_n \}$ (assuming $x_i \in \mathbb{R}^m$) is the vector $v \in \text{span}(\{x_1, \dots, x_n\})$ such that $v$ is as close as possible to $y$, as measured by the Euclidean norm $\|v-y\|_2$
+
