@@ -547,10 +547,10 @@ S = \{v \in \mathbb{R}^n: v= \sum_{i=1}^n \alpha_i a_i \text{ where } 0 \leq \al
 </ul>
 <p>In order to define the determinant, it is useful to define, for <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span>, the matrix <span class="math inline">\(A_{\backslash i,\backslash j} \in \mathbb{R}^{(n-1)\times(n-1)}\)</span> to be the matrix that results from deleting the <span class="math inline">\(i\)</span>th row and the <span class="math inline">\(j\)</span>th column from <span class="math inline">\(A\)</span>. The determinant of this matrix is called the <span class="math inline">\((i,j)\)</span><strong><em>minor</em></strong> of <span class="math inline">\(A\)</span>, sometimes denoted <span class="math inline">\(M_{ij}\)</span> (i.e. <span class="math inline">\(|A_{\backslash i,\backslash j}|= M_{ij}\)</span>). The general (recursive) formula for the determinant is <span class="math display">\[
 \begin{align}
-|A| &amp; = \sum_{i=1}^n (-1)^{i+j} a_{ij}|A_{\backslash i,\backslash j}| = \sum_{i=1}^n (-1)^{i+j} a_{ij} M_{ij} &amp;&amp;(\text{for any } j \in 1, \dots, n) \\
-    &amp; = \sum_{j=1}^n (-1)^{i+j} a_{ij}|A_{\backslash i,\backslash j}| = \sum_{j=1}^n (-1)^{i+j} a_{ij} M_{ij} &amp;&amp;(\text{for any } i \in 1, \dots, n)
+|A| &amp; = \sum_{i=1}^n (-1)^{i+j} A_{ij}|A_{\backslash i,\backslash j}| = \sum_{i=1}^n (-1)^{i+j} A_{ij} M_{ij} &amp;&amp;(\text{for any } j \in 1, \dots, n) \\
+    &amp; = \sum_{j=1}^n (-1)^{i+j} A_{ij}|A_{\backslash i,\backslash j}| = \sum_{j=1}^n (-1)^{i+j} A_{ij} M_{ij} &amp;&amp;(\text{for any } i \in 1, \dots, n)
 \end{align}
-\]</span> with the initial case that <span class="math inline">\(|A|=a_{11}\)</span> for <span class="math inline">\(A \in \mathbb{R}^{1 \times 1}\)</span>. The formula expanded completely for <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span> would have a total of <span class="math inline">\(n!\)</span> different terms, so it’s usually never written out explicitly.</p>
+\]</span> with the initial case that <span class="math inline">\(|A|=A_{11}\)</span> for <span class="math inline">\(A \in \mathbb{R}^{1 \times 1}\)</span>. The formula expanded completely for <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span> would have a total of <span class="math inline">\(n!\)</span> different terms, so it’s usually never written out explicitly.</p>
 <p>The <strong><em>classical adjoint</em></strong> (aka the <strong><em>adjugate</em></strong> matrix) of a matrix <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span>, is denoted <span class="math inline">\(\text{adj}(A)\)</span>, and defined as <span class="math display">\[
 \begin{align}
 \text{adj}(A) \in \mathbb{R}^{n \times n}, (\text{adj}(A))_{ij}  &amp; = (-1)^{i+j}|A_{\backslash j, \backslash i}| \\
@@ -590,7 +590,7 @@ Ax = \sum_{i=1}^n x_i a_i = 0
 <p>Given a square matrix <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span>, we say that <span class="math inline">\(\lambda \in \mathbb{C}\)</span> is an <strong><em>eigenvalue</em></strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(x \in \mathbb{C}^n\)</span> is the corresponding <strong><em>eigenvector</em></strong> if <span class="math display">\[
 Ax = \lambda x, \quad x \neq 0
 \]</span></p>
-<p>This definition means that multiplying <span class="math inline">\(A\)</span> by the vector <span class="math inline">\(x\)</span> results in a new vector that points in the same direction as <span class="math inline">\(x\)</span>, but scaled by a factor <span class="math inline">\(\lambda\)</span>. Also note that for any eigenvector <span class="math inline">\(x \in \mathbb{C}^n\)</span> and scalar <span class="math inline">\(t \in \mathbb{C}, A(cx) = cAx = c\lambda x = lambda(cx)\)</span>, so <span class="math inline">\(cx\)</span> is also an eigenvector. For this reason, when we talk about “the” eigenvector associated with <span class="math inline">\(\lambda\)</span>, we usually assume that the eigenvector is normalized to have length <span class="math inline">\(1\)</span> (this still leaves some ambiguity, since <span class="math inline">\(x\)</span> and <span class="math inline">\(-x\)</span> will both be eigenvectors, but we will live with this).</p>
+<p>This definition means that multiplying <span class="math inline">\(A\)</span> by the vector <span class="math inline">\(x\)</span> results in a new vector that points in the same direction as <span class="math inline">\(x\)</span>, but scaled by a factor <span class="math inline">\(\lambda\)</span>. Also note that for any eigenvector <span class="math inline">\(x \in \mathbb{C}^n\)</span> and scalar <span class="math inline">\(t \in \mathbb{C}, A(cx) = cAx = c\lambda x = \lambda(cx)\)</span>, so <span class="math inline">\(cx\)</span> is also an eigenvector. For this reason, when we talk about “the” eigenvector associated with <span class="math inline">\(\lambda\)</span>, we usually assume that the eigenvector is normalized to have length <span class="math inline">\(1\)</span> (this still leaves some ambiguity, since <span class="math inline">\(x\)</span> and <span class="math inline">\(-x\)</span> will both be eigenvectors, but we will live with this).</p>
 <p>We can rewrite the equation above to state that <span class="math inline">\((\lambda, x)\)</span> is an eigenvalue-eigenvector pair of <span class="math inline">\(A\)</span> if <span class="math display">\[
 (\lambda I - A) x = 0, \quad x \neq 0
 \]</span> <span class="math inline">\((\lambda I -A) x - 0\)</span> has a non-zero solution to <span class="math inline">\(x\)</span> iff <span class="math inline">\((\lambda I -A)\)</span> has a non-empty nullspace, which is only the case if <span class="math inline">\((\lambda I - A)\)</span> is singular, i.e., <span class="math display">\[
@@ -606,7 +606,7 @@ Ax = \lambda x, \quad x \neq 0
 \]</span></li>
 <li>The rank of <span class="math inline">\(A\)</span> is equal to the number of non-zero eigenvalues of <span class="math inline">\(A\)</span>.</li>
 <li>If <span class="math inline">\(A\)</span> is non-singular, then <span class="math inline">\(1/\lambda_i\)</span> is an eigenvalue of <span class="math inline">\(A^{-1}\)</span> with associated eigenvector <span class="math inline">\(x_i\)</span>, i.e., <span class="math inline">\(A^{-1}x_i = (1/\lambda_i)x_i\)</span>. (To prove this, left-multiply each side of the eigenvector equation <span class="math inline">\(Ax_i = \lambda_i x_i\)</span> by <span class="math inline">\(A^{-1}\)</span>).</li>
-<li>The eigenvalues of a diagonal matrix <span class="math inline">\(D = \text{diag}(d_1, \dots, d_n)\)</span> are just the diagonal entries <span class="math inline">\(d_1, \dots, \d_n\)</span>.</li>
+<li>The eigenvalues of a diagonal matrix <span class="math inline">\(D = \text{diag}(d_1, \dots, d_n)\)</span> are just the diagonal entries <span class="math inline">\(d_1, \dots, d_n\)</span>.</li>
 </ul>
 <p>We can write all the eigenvector equations simultaneously as <span class="math display">\[
 AX = X\Lambda
@@ -622,18 +622,127 @@ X \in \mathbb{R}^{n \times n} = \begin{bmatrix}
 </div>
 <div id="eigenvalues-and-eigenvectors-of-symmetric-matrices" class="section level2">
 <h2><strong>3.13 eigenvalues and eigenvectors of symmetric matrices</strong></h2>
-<p>The eigenvalues and eigenvectors of a symmetric matrix <span class="math inline">\(A \in \mathbb{S}^n\)</span>. First, it can be shown that all of the eigenvalues of <span class="math inline">\(A\)</span> are real. Secondly, the eigenvectors of <span class="math inline">\(A\)</span> are orthonormal, i.e. the matrix <span class="math inline">\(X\)</span> as defined above is an orthogonal matrix (for this reason, we denote the matrix of eigenvectors as <span class="math inline">\(U\)</span> in this case). We can therefore represent <span class="math inline">\(A\)</span> as <span class="math inline">\(A=U\Lambda U^T\)</span>, remembering that the inverse of an orthogonal matrix is just its transpose.</p>
+<p>The eigenvalues and eigenvectors of a symmetric matrix <span class="math inline">\(A \in \mathbb{S}^n\)</span> have two nice properties. First, it can be shown that all of the eigenvalues of <span class="math inline">\(A\)</span> are real. Secondly, the eigenvectors of <span class="math inline">\(A\)</span> are orthonormal, i.e. the matrix <span class="math inline">\(X\)</span> as defined above is an orthogonal matrix (for this reason, we denote the matrix of eigenvectors as <span class="math inline">\(U\)</span> in this case). We can therefore represent <span class="math inline">\(A\)</span> as <span class="math inline">\(A=U\Lambda U^T\)</span>, remembering that the inverse of an orthogonal matrix is just its transpose.</p>
 <p>Using this, we can show that the definiteness of a matrix depends entirely on the sign of its eigenvalues. Suppose <span class="math inline">\(A \in \mathbb{S}^n = U \Lambda U^T\)</span>. Then <span class="math display">\[
 x^TAx = x^TU \Lambda U^T x = y^T \Lambda y = \sum_{i=1}^n \lambda_i y_i^2
 \]</span> where <span class="math inline">\(y = U^Tx\)</span> (and since <span class="math inline">\(U\)</span> is full rank, any vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> can be represented in this form). Because <span class="math inline">\(y_i^2\)</span> is always positive, the sign of this expression depends entirely on the <span class="math inline">\(\lambda_i\)</span>’s. If all <span class="math inline">\(\lambda_i &gt; 0\)</span>, then the matrix is positive definite; if all <span class="math inline">\(\lambda_i \geq 0\)</span>, it is positive semidefinite. Likewise, if all <span class="math inline">\(\lambda_i &lt; 0\)</span> or <span class="math inline">\(\lambda_i \leq 0\)</span>, then <span class="math inline">\(A\)</span> is negative definite or negative semidefinite, respectively. Finally, if <span class="math inline">\(A\)</span> has both positive and negative eigenvalues, it is indefinite.</p>
 <p>An application where eigenvalues and eigenvectors come up frequently is in maximizing some function of a matrix. In particular, for a matrix <span class="math inline">\(A \in \mathbb{S}^n\)</span>, consider the following maximization problem, <span class="math display">\[
-\max_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to} \|x\|_2^2 = 1
+\max_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to } \|x\|_2^2 = 1
 \]</span> i.e., we want to find the vector (of norm <span class="math inline">\(1\)</span>) which maximizes the quadratic form. Assuming the eigenvalues are ordered as <span class="math inline">\(\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n\)</span>, the optimal <span class="math inline">\(x\)</span> for this optimization problem is <span class="math inline">\(x_1\)</span>, the eigenvector corresponding to <span class="math inline">\(\lambda_1\)</span>. In this case the maximal value of the quadratic form is <span class="math inline">\(\lambda_1\)</span>. Similarly, the optimal solution to the minimization problem, <span class="math display">\[
-\min_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to} \|x\|_2^2 = 1
+\min_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to } \|x\|_2^2 = 1
 \]</span> is <span class="math inline">\(x_n\)</span>, the eigenvector corresponding to <span class="math inline">\(\lambda_n\)</span>, and the minimal value is <span class="math inline">\(\lambda_n\)</span>. This can be proved by appealing to the eigenvector-eigenvalue form of <span class="math inline">\(A\)</span> and the properties of orthogonal matrices. However, in the next section we will see a way of showing it directly using matrix calculus.</p>
 </div>
 <div id="the-gradient" class="section level2">
 <h2><strong>4.1 the gradient</strong></h2>
+<p>Suppose that <span class="math inline">\(f : \mathbb{R}^{m \times n} \rightarrow\)</span> is a function that takes as input a matrix <span class="math inline">\(A\)</span> of size <span class="math inline">\(m \times n\)</span> and returns a real value. Then the <strong><em>gradient</em></strong> of <span class="math inline">\(f\)</span> (with respect to <span class="math inline">\(A \in \mathbb{R}^{m \times n}\)</span>) is the matrix of partial derivatives, defined as: <span class="math display">\[
+\nabla_A f(A) \in \mathbb{R}^{m \times n} = \begin{bmatrix}
+                                          \tfrac{\partial f(A)}{\partial A_{11}} &amp; \tfrac{\partial f(A)}{\partial A_{12}} &amp; \cdots  &amp; \tfrac{\partial f(A)}{\partial A_{1n}} \\
+                                          \tfrac{\partial f(A)}{\partial A_{21}} &amp; \tfrac{\partial f(A)}{\partial A_{22}} &amp; \cdots  &amp; \tfrac{\partial f(A)}{\partial A_{2n}} \\
+                                          \vdots                                &amp; \vdots                                &amp; \ddots  &amp; \vdots                                      \\
+                                          \tfrac{\partial f(A)}{\partial A_{m1}} &amp; \tfrac{\partial f(A)}{\partial A_{m2}} &amp; \cdots  &amp; \tfrac{\partial f(A)}{\partial A_{mn}}
+                                          \end{bmatrix}
+\]</span> i.e., an <span class="math inline">\(m \times n\)</span> matrix with <span class="math display">\[
+(\nabla_A f(A))_{ij} = \frac{\partial{f(A)}}{ \partial{A_{ij}}}
+\]</span> Note that the size of <span class="math inline">\(\nabla_A f(A)\)</span> is always the same as the size of <span class="math inline">\(A\)</span>. So if, in particular, <span class="math inline">\(A\)</span> is just a vector <span class="math inline">\(x \in \mathbb{R}^n\)</span>, <span class="math display">\[
+\nabla_x f(x) = \begin{bmatrix}
+                \tfrac{\partial f(x)}{\partial x_1} \\
+                \tfrac{\partial f(x)}{\partial x_2} \\
+                \vdots                              \\
+                \tfrac{\partial f(x)}{\partial x_n}
+                \end{bmatrix}
+\]</span> It is very important to remember that the gradient of a function is <em>only</em> defined if the function is real-valued, that is, if it returns a scalar value. We can not, for example, take the gradient of <span class="math inline">\(Ax, A \in \mathbb{R}^{n \times n}\)</span> with respect to <span class="math inline">\(x\)</span>, since this quantity is vector-valued.</p>
+<p>It follows directly from the equivalent properties of partial derivatives that:</p>
+<ul>
+<li><span class="math inline">\(\nabla_x(f(x)+g(x)) = \nabla_xf(x) + \nabla_x g(x)\)</span></li>
+<li>For <span class="math inline">\(t \in \mathbb{R}, \nabla_x(tf(x)) = t \nabla_x f(x)\)</span></li>
+</ul>
+<p>In principle, gradients are a natural extension of partial derivatives to functions of multiple variables. In practice, however, working with gradients can sometimes be tricky for notational reasons. For example, suppose that <span class="math inline">\(A \in \mathbb{R}^{m \times n}\)</span> is a matrix of fixed coefficients and suppose that <span class="math inline">\(x \in \mathbb{R}^n\)</span> (note: this is a typo in the original notes) is a vector of fixed coefficients. Let <span class="math inline">\(f: \mathbb{R}^m \rightarrow \mathbb{R}\)</span> be the function defined by <span class="math inline">\(f(z) = z^Tz\)</span>, such that <span class="math inline">\(\nabla_z f(z) = 2z\)</span>. But now, consider the expression, <span class="math display">\[
+\nabla f(Ax)
+\]</span> How should this expression be interpreted? There are at least two possibilities:</p>
+<ol style="list-style-type: decimal">
+<li>In the first interpretation, recall that <span class="math inline">\(\nabla f(z) = 2z\)</span>. Here, we interpret <span class="math inline">\(\nabla(Ax)\)</span> as evaluating the gradient at the point <span class="math inline">\(Ax\)</span>, hence, <span class="math display">\[
+\nabla f(Ax) = 2(Ax) = 2Ax \in \mathbb{R}^m
+\]</span></li>
+<li>In the second interpretation, we consider the quantity <span class="math inline">\(f(Ax)\)</span> as a function of the input variables <span class="math inline">\(x\)</span>. More formally, let <span class="math inline">\(g(x) = f(Ax)\)</span>. Then in this interpretation, <span class="math display">\[
+\nabla f(Ax) = \nabla_x g(x) \in \mathbb{R}^n
+\]</span> Here, we can see that these two interpretations are indeed different. One interpretation yields an <span class="math inline">\(m\)</span>-dimensional vector, while the other interpretation yields an <span class="math inline">\(n\)</span>-dimensional vector.</li>
+</ol>
+<p>The key is to make explicit the variables which we are differentiating with respect to. In the first case, we are differentiating the function <span class="math inline">\(f\)</span> with respect to its arguments <span class="math inline">\(z\)</span> and then substituting the argument <span class="math inline">\(Ax\)</span>. In the second case, we are differentiating the composite function <span class="math inline">\(g(x)=f(Ax)\)</span> with respect to <span class="math inline">\(x\)</span> directly. We denote the first case as <span class="math inline">\(\nabla_z f(Ax)\)</span> and the second case as <span class="math inline">\(\nabla_x f(Ax)\)</span>.</p>
+</div>
+<div id="the-hessian" class="section level2">
+<h2><strong>4.2 the hessian</strong></h2>
+<p>Suppose that <span class="math inline">\(f: \mathbb{R}^n \rightarrow \mathbb{R}\)</span> is a function that takes a vector in <span class="math inline">\(\mathbb{R}^n\)</span> and returns a real number. Then the <strong><em>Hessian</em></strong> matrix with respect to <span class="math inline">\(x\)</span>, written <span class="math inline">\(\nabla_x^2 f(x)\)</span> or simply as <span class="math inline">\(H\)</span> is the <span class="math inline">\(n \times n\)</span> matrix of partial derivatives, <span class="math display">\[
+\nabla_x^2 f(x) \in \mathbb{R}^{n \times n} = \begin{bmatrix}
+                                              \tfrac{\partial^2 f(x)}{\partial x_1^2}             &amp; \tfrac{\partial^2 f(x)}{\partial x_1 \partial x_2}  &amp; \cdots &amp; \tfrac{\partial^2 f(x)}{\partial x_1 \partial x_n} \\
+                                              \tfrac{\partial^2 f(x)}{\partial x_2 \partial x_1}  &amp; \tfrac{\partial^2 f(x)}{\partial x_2^2}             &amp; \cdots &amp; \tfrac{\partial^2 f(x)}{\partial x_2 \partial x_n} \\
+                                              \vdots                                              &amp; \vdots                                                     &amp; \ddots  &amp; \vdots                                                   \\
+                                              \tfrac{\partial^2 f(x)}{\partial x_n \partial x_1} &amp; \tfrac{\partial^2 f(x)}{\partial x_n \partial x_2}  &amp;  \cdots &amp; \tfrac{\partial^2 f(x)}{\partial x_n^2} \\
+                                              \end{bmatrix}
+\]</span> In other words, <span class="math inline">\(\nabla_x^2 f(x) \in \mathbb{R}^{n \times n}\)</span>, with <span class="math display">\[
+(\nabla_x^2 f(x))_{ij} = \frac{\partial^2 f(x)}{\partial x_i \partial x_j}
+\]</span> Note that the Hessian is always symmetric, since <span class="math display">\[
+\frac{\partial^2 f(x)}{\partial x_i \partial x_j} = \frac{\partial^2 f(x)}{\partial x_j \partial x_i}
+\]</span> Similar to the gradient, the Hessian is defined only when <span class="math inline">\(f(x)\)</span> is real-valued.</p>
+<p>It is natural to think of the gradient as the analogue of the first derivative for functions of vectors, and the Hessian as the analogue of the second derivative. This intuition is generally correct, but there are a few caveats to keep in mind.</p>
+<p>First, for real-valued functions of one variable <span class="math inline">\(f: \mathbb{R} \rightarrow \mathbb{R}\)</span>, it is a basic definition that the second derivative is the derivative of the first derivative, i.e., <span class="math display">\[
+\frac{\partial^2 f(x)}{\partial x^2} = \frac{\partial}{\partial x} \frac{\partial}{\partial x} f(x)
+\]</span> However, for functions of a vector, the gradient of the function is a vector, and we cannot take the gradient of a vector – i.e., <span class="math display">\[
+\nabla_x \nabla_x f(x) \neq \nabla_x \begin{bmatrix}
+                \tfrac{\partial f(x)}{\partial x_1} \\
+                \tfrac{\partial f(x)}{\partial x_2} \\
+                \vdots                              \\
+                \tfrac{\partial f(x)}{\partial x_n}
+                \end{bmatrix}
+\]</span> as this expression is not defined. Therefore, it is <em>not</em> the case that the Hessian is the gradient of the gradient. However, this is <em>almost</em> true, in the following sense: If we look at the <span class="math inline">\(i\)</span>th entry of the gradient <span class="math inline">\((\nabla_x f(x))_i = \partial f(x) / \partial x_i\)</span>, and take the gradient with respect to <span class="math inline">\(x\)</span> we get <span class="math display">\[
+\nabla_x \frac{\partial f(x)}{\partial x_i} = \begin{bmatrix}
+                                              \tfrac{\partial^2 f(x)}{\partial x_i \partial x_1}  \\
+                                              \tfrac{\partial^2 f(x)}{\partial x_i \partial x_2}  \\
+                                              \vdots                                              \\
+                                              \tfrac{\partial^2 f(x)}{\partial x_i \partial x_n}  \\
+                                              \end{bmatrix}
+\]</span> which is the <span class="math inline">\(i\)</span>th column (or row) of the Hessian. Therefore, <span class="math display">\[
+\nabla_x^2 f(x) = \begin{bmatrix}
+                  \nabla_x(\nabla_x f(x))_1 &amp;
+                  \nabla_x(\nabla_x f(x))_2 &amp;
+                  \cdots                    &amp;
+                  \nabla_x(\nabla_x f(x))_n
+                  \end{bmatrix}
+\]</span> If we don’t mind being a little bit sloppy we can say that (essentially) <span class="math inline">\(\nabla_x^2 f(x) = \nabla_x(\nabla_x f(x))^T\)</span>, as long as we understand that this really means taking the gradient of each entry of <span class="math inline">\((\nabla_x f(x))^T\)</span>, not the gradient of the whole vector.</p>
+</div>
+<div id="gradients-and-hessians-of-linear-and-quadratic-functions" class="section level2">
+<h2><strong>4.3 gradients and hessians of linear and quadratic functions</strong></h2>
+<p>Now let’s determine the gradient and Hessian matrices for a few simple functions.</p>
+<p>For <span class="math inline">\(x \in \mathbb{R}^n\)</span>, let <span class="math inline">\(f(x) = b^Tx\)</span> for some known vector <span class="math inline">\(b \in \mathbb{R}^n\)</span>. Then <span class="math display">\[
+f(x) = \sum_{i=1}^n b_i x_i
+\]</span> so <span class="math display">\[
+\frac{\partial f(x)}{\partial x_k} = \frac{\partial}{\partial x_k} \sum_{i=1}^n b_i x_i = b_k
+\]</span> From this we see that <span class="math inline">\(\nabla_x b^Tx = b\)</span>. This is analogous to the situation in single-variable calculus, where <span class="math inline">\(\tfrac{\partial}{\partial x} ax = a\)</span>.</p>
+<p>Now consider the quadratic function <span class="math inline">\(f(x) = x^T A\)</span> for <span class="math inline">\(A \in \mathbb{S}^n\)</span>. Remember that <span class="math display">\[
+f(x) = \sum_{i=1}^n \sum_{j=1}^n A_{ij}x_i x_j
+\]</span> (see section 3.11). To take the partial derivative, we’ll consider the terms including <span class="math inline">\(x_k\)</span> and <span class="math inline">\(x_k^2\)</span> factors separately: <span class="math display">\[
+\begin{align}
+\frac{\partial f(x)}{\partial x_k} &amp; =  \frac{\partial}{\partial x_k} \sum_{i=1}^n \sum_{j=1}^n A_{ij}x_i x_j \\
+&amp; = \frac{\partial}{\partial x_k} \left[\sum_{i \neq k} \sum_{j \neq k}A_{ij}x_ix_j + \sum_{i \neq k}A_{ik}x_ix_k + \sum_{j \neq k} A_{kj}x_kx_j + A_{kk}x_k^2 \right] \\
+&amp; = \sum_{i \neq k}A_{ik}x_i + \sum_{j \neq k} A_{kj}x_j + 2A_{kk}x_k \\
+&amp; = \sum_{i=1}^n A_{ik}x_i + \sum_{j=1}^n A_{kj}x_j \\
+&amp; = 2 \sum_{i=1}^n A_{ki} x_i
+\end{align}
+\]</span> where the last equality follows since <span class="math inline">\(A\)</span> is symmetric (which we can safely assume, since it appearing in a quadratic form). Note that the <span class="math inline">\(k\)</span>th entry of <span class="math inline">\(\nabla_x f(x)\)</span> is just the inner product of the <span class="math inline">\(k\)</span>th row of <span class="math inline">\(A\)</span> and <span class="math inline">\(x\)</span>. Therefore, <span class="math inline">\(\nabla_x x^TAx = 2Ax\)</span>. Again, this is analogous to single-variable calculus, where <span class="math inline">\(\frac{\partial}{\partial x}ax^2 = 2ax\)</span>.</p>
+<p>Finally, let’s look at the Hessian of the quadratic function <span class="math inline">\(f(x)=x^TAx\)</span> (the Hessian of a linear function <span class="math inline">\(b^Tx\)</span> is just zero). In this case, <span class="math display">\[
+\frac{\partial^2 f(x)}{\partial x_k \partial x_l} = \frac{\partial}{\partial x_k} \left[\frac{\partial f(x)}{\partial x_l} \right] = \frac{\partial}{\partial x_k} \left[2 \sum_{i=1}^n A_{li} x_i \right] = 2A_{lk} = 2A_{kl}.
+\]</span> Therefore, <span class="math inline">\(\nabla_x^2 x^TAx = 2A\)</span>, which is again analogous to the single-variable case where <span class="math inline">\(\tfrac{\partial}{\partial x^2}ax^2 = 2a\)</span>.</p>
+<p>To recap,</p>
+<ul>
+<li><span class="math inline">\(\nabla_x b^Tx = b\)</span></li>
+<li><span class="math inline">\(\nabla_x x^TAx = 2Ax\)</span> (if A symmetric)</li>
+<li><span class="math inline">\(\nabla_x^2 x^TAx = 2A\)</span> (if A symmetric)</li>
+</ul>
+</div>
+<div id="gradients-of-the-determinant" class="section level2">
+<h2><strong>4.5 gradients of the determinant</strong></h2>
+<p>Let’s consider a situation where we want to find the gradient of a function wtih respect to a matrix, namely for <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span>, we want to find <span class="math inline">\(\nabla_A |A|\)</span>. Recall from our discussion of determinants (section 3.10) that <span class="math display">\[
+|A| = \sum_{i=1}^n(-1)^{i+j}A_{ij} M_{ij} \quad (\text{for any } j \in 1,\dots,n, \text{ where }M_{ij}=|A_{\backslash i, \backslash j}|)
+\]</span></p>
 </div>
 </div>
 
