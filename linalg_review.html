@@ -727,7 +727,7 @@ f(x) = \sum_{i=1}^n \sum_{j=1}^n A_{ij}x_i x_j
 &amp; = \sum_{i=1}^n A_{ik}x_i + \sum_{j=1}^n A_{kj}x_j \\
 &amp; = 2 \sum_{i=1}^n A_{ki} x_i
 \end{align}
-\]</span> where the last equality follows since <span class="math inline">\(A\)</span> is symmetric (which we can safely assume, since it appearing in a quadratic form). Note that the <span class="math inline">\(k\)</span>th entry of <span class="math inline">\(\nabla_x f(x)\)</span> is just the inner product of the <span class="math inline">\(k\)</span>th row of <span class="math inline">\(A\)</span> and <span class="math inline">\(x\)</span>. Therefore, <span class="math inline">\(\nabla_x x^TAx = 2Ax\)</span>. Again, this is analogous to single-variable calculus, where <span class="math inline">\(\frac{\partial}{\partial x}ax^2 = 2ax\)</span>.</p>
+\]</span> where the last equality follows since <span class="math inline">\(A\)</span> is symmetric (which we can safely assume, since it is appearing in a quadratic form). Note that the <span class="math inline">\(k\)</span>th entry of <span class="math inline">\(\nabla_x f(x)\)</span> is just the inner product of the <span class="math inline">\(k\)</span>th row of <span class="math inline">\(A\)</span> and <span class="math inline">\(x\)</span>. Therefore, <span class="math inline">\(\nabla_x x^TAx = 2Ax\)</span>. Again, this is analogous to single-variable calculus, where <span class="math inline">\(\frac{\partial}{\partial x}ax^2 = 2ax\)</span>.</p>
 <p>Finally, let’s look at the Hessian of the quadratic function <span class="math inline">\(f(x)=x^TAx\)</span> (the Hessian of a linear function <span class="math inline">\(b^Tx\)</span> is just zero). In this case, <span class="math display">\[
 \frac{\partial^2 f(x)}{\partial x_k \partial x_l} = \frac{\partial}{\partial x_k} \left[\frac{\partial f(x)}{\partial x_l} \right] = \frac{\partial}{\partial x_k} \left[2 \sum_{i=1}^n A_{li} x_i \right] = 2A_{lk} = 2A_{kl}.
 \]</span> Therefore, <span class="math inline">\(\nabla_x^2 x^TAx = 2A\)</span>, which is again analogous to the single-variable case where <span class="math inline">\(\tfrac{\partial}{\partial x^2}ax^2 = 2a\)</span>.</p>
@@ -741,8 +741,27 @@ f(x) = \sum_{i=1}^n \sum_{j=1}^n A_{ij}x_i x_j
 <div id="gradients-of-the-determinant" class="section level2">
 <h2><strong>4.5 gradients of the determinant</strong></h2>
 <p>Let’s consider a situation where we want to find the gradient of a function wtih respect to a matrix, namely for <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span>, we want to find <span class="math inline">\(\nabla_A |A|\)</span>. Recall from our discussion of determinants (section 3.10) that <span class="math display">\[
-|A| = \sum_{i=1}^n(-1)^{i+j}A_{ij} M_{ij} \quad (\text{for any } j \in 1,\dots,n, \text{ where }M_{ij}=|A_{\backslash i, \backslash j}|)
+|A| = \sum_{i=1}^n(-1)^{i+j}A_{ij} |A_{\backslash i, \backslash j}| \quad (\text{for any } j \in 1,\dots,n)
+\]</span> so <span class="math display">\[
+\frac{\partial}{\partial A_{kl}} |A| = \frac{\partial}{\partial A_{kl}} \sum_{i=1}^n (-1)^{i+j}A_{ij} |A_{\backslash i, \backslash j}| = (-1)^{k+l}|A_{\backslash k,\backslash l}| = (\text{adj}(A))_{lk}
+\]</span> From this and the properties of the adjugate it follows that <span class="math display">\[
+\nabla_A|A| = (\text{adj}(A))^T = |A|A^{-T}
 \]</span></p>
+<p>Now let’s consider the function <span class="math inline">\(f: \mathbb{S}_{++}^n \rightarrow \mathbb{R}, f(A) = \log|A|\)</span>. Note that we restrict the domain of <span class="math inline">\(f\)</span> to be the positive definite matrices, since this ensures that <span class="math inline">\(|A| &gt; 0\)</span>, so that the <span class="math inline">\(\log\)</span> of <span class="math inline">\(|A|\)</span> is a real number. In this case we can use the chain rule (from single-variable calculus) to see that <span class="math display">\[
+\frac{\partial \log |A|}{\partial A_{ij}} = \frac{\partial \log |A|}{\partial |A|} \frac{\partial |A|}{\partial A_{ij}} = \frac{1}{|A|} \frac{\partial |A|}{\partial A_{ij}}
+\]</span> So, <span class="math display">\[
+\nabla_A \log |A| = \frac{1}{|A|} \nabla_A |A| = A^{-1}
+\]</span> where we can drop the transpose in the last expression because <span class="math inline">\(A\)</span> is symmetric. Note the similarity to the single-variable case, where <span class="math inline">\(\tfrac{\partial}{\partial x} \log x = \tfrac{1}{x}\)</span>.</p>
+</div>
+<div id="eigenvalues-as-optimization" class="section level2">
+<h2><strong>4.6 eigenvalues as optimization</strong></h2>
+<p>Finally, we use matrix calculus to solve an optimization problem in a way that leads directly to eigenvalue/eigenvector analysis. Consider the following equality constrained optimization problem: <span class="math display">\[
+\max_{x \in \mathbb{R}^n} x^TAx \quad \text{subject to } \|x\|_2^2=1
+\]</span> for a symmetric matrix <span class="math inline">\(A \in \mathbb{S}^n\)</span>. A standard way of solving optimization problems with equality constrains is by forming the <strong><em>Lagrangian</em></strong>, an objective function that includes the equality constraints. The Lagrangian in this case is given by <span class="math display">\[
+\mathcal{L}(x, \lambda) = x^TAx-\lambda x^Tx
+\]</span> where <span class="math inline">\(\lambda\)</span> is called the Lagrange multiplier associated wtih the equality constraint. It can be established that for <span class="math inline">\(x^{*}\)</span> to be an optimal point to the problem, the gradient of the Lagrangian must be zero at <span class="math inline">\(x^{*}\)</span> (this is not the only condition, but it is required). That is, <span class="math display">\[
+\nabla_x \mathcal{L}(x, \lambda) = \nabla_x (x^TAx- \lambda x^Tx) = 2Ax-2 \lambda x = 0
+\]</span> Notice that this is just the linear eigenvalue equation <span class="math inline">\(Ax=\lambda x\)</span>. This shows that the only points which can possibly maximize (or minimize) <span class="math inline">\(x^TAx\)</span> assuming <span class="math inline">\(x^Tx=1\)</span> are the eigenvectors or <span class="math inline">\(A\)</span>.</p>
 </div>
 </div>
 
