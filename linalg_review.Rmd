@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 #**linear algebra review**
 
-This post goes through the linear algebra review and reference section notes from the Stanford CS229 Machine Learning course posted [here](http://cs229.stanford.edu/section/cs229-linalg.pdf). This is not meant to be comprehensive, it's things in the notes I didn't understand at first and things I thought were important.
+This post goes through the [linear algebra review and reference section notes](http://cs229.stanford.edu/section/cs229-linalg.pdf) from the Stanford CS229 Machine Learning course. This is not meant to be comprehensive, it's things in the notes I didn't understand at first and things I thought were important.
 
 ##**2.1 vector-vector products**
 ### **inner (dot) product**
@@ -584,3 +584,75 @@ for some $x_1, \dots, x_{j-1}, x_{j+1}, \dots, x_n \in \mathbb{R}$. Setting $x_j
 $$
 Ax = \sum_{i=1}^n x_i a_i = 0
 $$
+(If this is not immediately clear, write out the matrix-vector product explicitly, representing $A$ as columns as in section 2.2). $Ax=0$ implies that $x^TAx=0$ for some non-zero vector $x$, so $A$ must be neither positive definite nor negative definite. Therefore, if $A$ is either positive definite or negative definite, it must be full rank.
+
+Finally, there is one type of positive definite matrix that comes up frequently, and so deserves some special attention. Given any matrix $A \in \mathbb{R}^{m \times n}$ (not necessarily symmetric or even square), the matrix $G = A^TA$ (sometimes called a ***Gram matrix***) is always positive semidefinite. Further, if $m \geq n$ (and we assume for convenience that $A$ is full rank), then $G = A^TA$ is positive definite.
+
+## **3.12 eigenvalues and eigenvectors**
+Given a square matrix $A \in \mathbb{R}^{n \times n}$, we say that $\lambda \in \mathbb{C}$ is an ***eigenvalue*** of $A$ and $x \in \mathbb{C}^n$ is the corresponding ***eigenvector*** if
+$$
+Ax = \lambda x, \quad x \neq 0
+$$
+
+This definition means that multiplying $A$ by the vector $x$ results in a new vector that points in the same direction as $x$, but scaled by a factor $\lambda$. Also note that for any eigenvector $x \in \mathbb{C}^n$ and scalar $t \in \mathbb{C}, A(cx) = cAx = c\lambda x = lambda(cx)$, so $cx$ is also an eigenvector. For this reason, when we talk about "the" eigenvector associated with $\lambda$, we usually assume that the eigenvector is normalized to have length $1$ (this still leaves some ambiguity, since $x$ and $-x$ will both be eigenvectors, but we will live with this).
+
+We can rewrite the equation above to state that $(\lambda, x)$ is an eigenvalue-eigenvector pair of $A$ if
+$$
+(\lambda I - A) x = 0, \quad x \neq 0
+$$
+$(\lambda I -A) x - 0$ has a non-zero solution to $x$ iff $(\lambda I -A)$ has a non-empty nullspace, which is only the case if $(\lambda I - A)$ is singular, i.e.,
+$$
+|(\lambda I -A)| = 0
+$$
+This determinant is a (very large) polynomial in $\lambda$, where $\lambda$ will have maximum degree $n$. The $n$ (possibly complex) roots of this polynomial are the eigenvalues $\lambda_1, \dots, \lambda_2$. To find the eigenvector corresponding to the eigenvalue $\lambda_i$ , we solve the linaer equation $(\lambda_i I -A)x = 0$. It should be noted that in practice this method is not used to numerically compute the eigenvalues and eigenvectors (remember that the complete expansion of the determinant has $n!$ terms).
+
+The following are properties of eigenvalues and eigenvectors, in all cases assuming $A \in \mathbb{R}^{n \times n}$ with eigenvalues $\lambda_1, \dots, \lambda_n$ and associated eigenvectors $x_1, \dots, x_n$:
+
+- The trace of $A$ is equal to the sum of its eigenvalues:
+$$
+\text{tr}A = \sum_{i = 1}^n \lambda_i
+$$
+- The determinant of $A$ is equal to the product of its eigenvalues:
+$$
+|A| = \prod_{i=1}^n \lambda_i
+$$
+- The rank of $A$ is equal to the number of non-zero eigenvalues of $A$.
+- If $A$ is non-singular, then $1/\lambda_i$ is an eigenvalue of $A^{-1}$ with associated eigenvector $x_i$, i.e., $A^{-1}x_i = (1/\lambda_i)x_i$. (To prove this, left-multiply each side of the eigenvector equation $Ax_i = \lambda_i x_i$ by $A^{-1}$).
+- The eigenvalues of a diagonal matrix $D = \text{diag}(d_1, \dots, d_n)$ are just the diagonal entries $d_1, \dots, \d_n$.
+
+We can write all the eigenvector equations simultaneously as
+$$
+AX = X\Lambda
+$$
+where the columns of $X \in \mathbb{R}^{n \times n}$ are the eigenvectors of $A$ and $\Lambda$ is a diagonal matrix whose entries are the eigenvalues of $A$, i.e.,
+$$
+X \in \mathbb{R}^{n \times n} = \begin{bmatrix}
+                                \mid  & \mid  &         & \mid  \\
+                                x_1   & x_2   & \cdots  & x_n   \\
+                                \mid  & \mid  &         & \mid
+                                \end{bmatrix},
+                                \quad
+                                \Lambda = \text{diag}(\lambda_1, \dots, \lambda_n)
+$$
+If the eigenvectors of $A$ are linearly independent, then the matrix $X$ will be invertible, so $A = X \Lambda X^{-1}$. A matrix that can be written in this form is called ***diagonalizable***.
+
+## **3.13 eigenvalues and eigenvectors of symmetric matrices**
+The eigenvalues and eigenvectors of a symmetric matrix $A \in \mathbb{S}^n$. First, it can be shown that all of the eigenvalues of $A$ are real. Secondly, the eigenvectors of $A$ are orthonormal, i.e. the matrix $X$ as defined above is an orthogonal matrix (for this reason, we denote the matrix of eigenvectors as $U$ in this case). We can therefore represent $A$ as $A=U\Lambda U^T$, remembering that the inverse of an orthogonal matrix is just its transpose.
+
+Using this, we can show that the definiteness of a matrix depends entirely on the sign of its eigenvalues. Suppose $A \in \mathbb{S}^n = U \Lambda U^T$. Then
+$$
+x^TAx = x^TU \Lambda U^T x = y^T \Lambda y = \sum_{i=1}^n \lambda_i y_i^2
+$$
+where $y = U^Tx$ (and since $U$ is full rank, any vector $y \in \mathbb{R}^n$ can be represented in this form). Because $y_i^2$ is always positive, the sign of this expression depends entirely on the $\lambda_i$'s. If all $\lambda_i > 0$, then the matrix is positive definite; if all $\lambda_i \geq 0$, it is positive semidefinite. Likewise, if all $\lambda_i < 0$ or $\lambda_i \leq 0$, then $A$ is negative definite or negative semidefinite, respectively. Finally, if $A$ has both positive and negative eigenvalues, it is indefinite.
+
+An application where eigenvalues and eigenvectors come up frequently is in maximizing some function of a matrix. In particular, for a matrix $A \in \mathbb{S}^n$, consider the following maximization problem,
+$$
+\max_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to } \|x\|_2^2 = 1
+$$
+i.e., we want to find the vector (of norm $1$) which maximizes the quadratic form. Assuming the eigenvalues are ordered as $\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n$, the optimal $x$ for this optimization problem is $x_1$, the eigenvector corresponding to $\lambda_1$. In this case the maximal value of the quadratic form is $\lambda_1$. Similarly, the optimal solution to the minimization problem,
+$$
+\min_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to } \|x\|_2^2 = 1
+$$
+is $x_n$, the eigenvector corresponding to $\lambda_n$, and the minimal value is $\lambda_n$. This can be proved by appealing to the eigenvector-eigenvalue form of $A$ and the properties of orthogonal matrices. However, in the next section we will see a way of showing it directly using matrix calculus.
+
+## **4.1 the gradient**

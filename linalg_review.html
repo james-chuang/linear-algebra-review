@@ -122,7 +122,7 @@ $(document).ready(function () {
 
 <div id="linear-algebra-review" class="section level1">
 <h1><strong>linear algebra review</strong></h1>
-<p>This post goes through the linear algebra review and reference section notes from the Stanford CS229 Machine Learning course posted <a href="http://cs229.stanford.edu/section/cs229-linalg.pdf">here</a>. This is not meant to be comprehensive, it’s things in the notes I didn’t understand at first and things I thought were important.</p>
+<p>This post goes through the <a href="http://cs229.stanford.edu/section/cs229-linalg.pdf">linear algebra review and reference section notes</a> from the Stanford CS229 Machine Learning course. This is not meant to be comprehensive, it’s things in the notes I didn’t understand at first and things I thought were important.</p>
 <div id="vector-vector-products" class="section level2">
 <h2><strong>2.1 vector-vector products</strong></h2>
 <div id="inner-dot-product" class="section level3">
@@ -582,7 +582,58 @@ x^TAx = (x^TAx)^T = x^TA^Tx = x^T \left(\frac{1}{2}A + \frac{1}{2}A^T \right)x,
 a_j = \sum_{i \neq j}x_ia_i
 \]</span> for some <span class="math inline">\(x_1, \dots, x_{j-1}, x_{j+1}, \dots, x_n \in \mathbb{R}\)</span>. Setting <span class="math inline">\(x_j = -1\)</span>, we have <span class="math display">\[
 Ax = \sum_{i=1}^n x_i a_i = 0
+\]</span> (If this is not immediately clear, write out the matrix-vector product explicitly, representing <span class="math inline">\(A\)</span> as columns as in section 2.2). <span class="math inline">\(Ax=0\)</span> implies that <span class="math inline">\(x^TAx=0\)</span> for some non-zero vector <span class="math inline">\(x\)</span>, so <span class="math inline">\(A\)</span> must be neither positive definite nor negative definite. Therefore, if <span class="math inline">\(A\)</span> is either positive definite or negative definite, it must be full rank.</p>
+<p>Finally, there is one type of positive definite matrix that comes up frequently, and so deserves some special attention. Given any matrix <span class="math inline">\(A \in \mathbb{R}^{m \times n}\)</span> (not necessarily symmetric or even square), the matrix <span class="math inline">\(G = A^TA\)</span> (sometimes called a <strong><em>Gram matrix</em></strong>) is always positive semidefinite. Further, if <span class="math inline">\(m \geq n\)</span> (and we assume for convenience that <span class="math inline">\(A\)</span> is full rank), then <span class="math inline">\(G = A^TA\)</span> is positive definite.</p>
+</div>
+<div id="eigenvalues-and-eigenvectors" class="section level2">
+<h2><strong>3.12 eigenvalues and eigenvectors</strong></h2>
+<p>Given a square matrix <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span>, we say that <span class="math inline">\(\lambda \in \mathbb{C}\)</span> is an <strong><em>eigenvalue</em></strong> of <span class="math inline">\(A\)</span> and <span class="math inline">\(x \in \mathbb{C}^n\)</span> is the corresponding <strong><em>eigenvector</em></strong> if <span class="math display">\[
+Ax = \lambda x, \quad x \neq 0
 \]</span></p>
+<p>This definition means that multiplying <span class="math inline">\(A\)</span> by the vector <span class="math inline">\(x\)</span> results in a new vector that points in the same direction as <span class="math inline">\(x\)</span>, but scaled by a factor <span class="math inline">\(\lambda\)</span>. Also note that for any eigenvector <span class="math inline">\(x \in \mathbb{C}^n\)</span> and scalar <span class="math inline">\(t \in \mathbb{C}, A(cx) = cAx = c\lambda x = lambda(cx)\)</span>, so <span class="math inline">\(cx\)</span> is also an eigenvector. For this reason, when we talk about “the” eigenvector associated with <span class="math inline">\(\lambda\)</span>, we usually assume that the eigenvector is normalized to have length <span class="math inline">\(1\)</span> (this still leaves some ambiguity, since <span class="math inline">\(x\)</span> and <span class="math inline">\(-x\)</span> will both be eigenvectors, but we will live with this).</p>
+<p>We can rewrite the equation above to state that <span class="math inline">\((\lambda, x)\)</span> is an eigenvalue-eigenvector pair of <span class="math inline">\(A\)</span> if <span class="math display">\[
+(\lambda I - A) x = 0, \quad x \neq 0
+\]</span> <span class="math inline">\((\lambda I -A) x - 0\)</span> has a non-zero solution to <span class="math inline">\(x\)</span> iff <span class="math inline">\((\lambda I -A)\)</span> has a non-empty nullspace, which is only the case if <span class="math inline">\((\lambda I - A)\)</span> is singular, i.e., <span class="math display">\[
+|(\lambda I -A)| = 0
+\]</span> This determinant is a (very large) polynomial in <span class="math inline">\(\lambda\)</span>, where <span class="math inline">\(\lambda\)</span> will have maximum degree <span class="math inline">\(n\)</span>. The <span class="math inline">\(n\)</span> (possibly complex) roots of this polynomial are the eigenvalues <span class="math inline">\(\lambda_1, \dots, \lambda_2\)</span>. To find the eigenvector corresponding to the eigenvalue <span class="math inline">\(\lambda_i\)</span> , we solve the linaer equation <span class="math inline">\((\lambda_i I -A)x = 0\)</span>. It should be noted that in practice this method is not used to numerically compute the eigenvalues and eigenvectors (remember that the complete expansion of the determinant has <span class="math inline">\(n!\)</span> terms).</p>
+<p>The following are properties of eigenvalues and eigenvectors, in all cases assuming <span class="math inline">\(A \in \mathbb{R}^{n \times n}\)</span> with eigenvalues <span class="math inline">\(\lambda_1, \dots, \lambda_n\)</span> and associated eigenvectors <span class="math inline">\(x_1, \dots, x_n\)</span>:</p>
+<ul>
+<li>The trace of <span class="math inline">\(A\)</span> is equal to the sum of its eigenvalues: <span class="math display">\[
+\text{tr}A = \sum_{i = 1}^n \lambda_i
+\]</span></li>
+<li>The determinant of <span class="math inline">\(A\)</span> is equal to the product of its eigenvalues: <span class="math display">\[
+|A| = \prod_{i=1}^n \lambda_i
+\]</span></li>
+<li>The rank of <span class="math inline">\(A\)</span> is equal to the number of non-zero eigenvalues of <span class="math inline">\(A\)</span>.</li>
+<li>If <span class="math inline">\(A\)</span> is non-singular, then <span class="math inline">\(1/\lambda_i\)</span> is an eigenvalue of <span class="math inline">\(A^{-1}\)</span> with associated eigenvector <span class="math inline">\(x_i\)</span>, i.e., <span class="math inline">\(A^{-1}x_i = (1/\lambda_i)x_i\)</span>. (To prove this, left-multiply each side of the eigenvector equation <span class="math inline">\(Ax_i = \lambda_i x_i\)</span> by <span class="math inline">\(A^{-1}\)</span>).</li>
+<li>The eigenvalues of a diagonal matrix <span class="math inline">\(D = \text{diag}(d_1, \dots, d_n)\)</span> are just the diagonal entries <span class="math inline">\(d_1, \dots, \d_n\)</span>.</li>
+</ul>
+<p>We can write all the eigenvector equations simultaneously as <span class="math display">\[
+AX = X\Lambda
+\]</span> where the columns of <span class="math inline">\(X \in \mathbb{R}^{n \times n}\)</span> are the eigenvectors of <span class="math inline">\(A\)</span> and <span class="math inline">\(\Lambda\)</span> is a diagonal matrix whose entries are the eigenvalues of <span class="math inline">\(A\)</span>, i.e., <span class="math display">\[
+X \in \mathbb{R}^{n \times n} = \begin{bmatrix}
+                                \mid  &amp; \mid  &amp;         &amp; \mid  \\
+                                x_1   &amp; x_2   &amp; \cdots  &amp; x_n   \\
+                                \mid  &amp; \mid  &amp;         &amp; \mid
+                                \end{bmatrix},
+                                \quad
+                                \Lambda = \text{diag}(\lambda_1, \dots, \lambda_n)
+\]</span> If the eigenvectors of <span class="math inline">\(A\)</span> are linearly independent, then the matrix <span class="math inline">\(X\)</span> will be invertible, so <span class="math inline">\(A = X \Lambda X^{-1}\)</span>. A matrix that can be written in this form is called <strong><em>diagonalizable</em></strong>.</p>
+</div>
+<div id="eigenvalues-and-eigenvectors-of-symmetric-matrices" class="section level2">
+<h2><strong>3.13 eigenvalues and eigenvectors of symmetric matrices</strong></h2>
+<p>The eigenvalues and eigenvectors of a symmetric matrix <span class="math inline">\(A \in \mathbb{S}^n\)</span>. First, it can be shown that all of the eigenvalues of <span class="math inline">\(A\)</span> are real. Secondly, the eigenvectors of <span class="math inline">\(A\)</span> are orthonormal, i.e. the matrix <span class="math inline">\(X\)</span> as defined above is an orthogonal matrix (for this reason, we denote the matrix of eigenvectors as <span class="math inline">\(U\)</span> in this case). We can therefore represent <span class="math inline">\(A\)</span> as <span class="math inline">\(A=U\Lambda U^T\)</span>, remembering that the inverse of an orthogonal matrix is just its transpose.</p>
+<p>Using this, we can show that the definiteness of a matrix depends entirely on the sign of its eigenvalues. Suppose <span class="math inline">\(A \in \mathbb{S}^n = U \Lambda U^T\)</span>. Then <span class="math display">\[
+x^TAx = x^TU \Lambda U^T x = y^T \Lambda y = \sum_{i=1}^n \lambda_i y_i^2
+\]</span> where <span class="math inline">\(y = U^Tx\)</span> (and since <span class="math inline">\(U\)</span> is full rank, any vector <span class="math inline">\(y \in \mathbb{R}^n\)</span> can be represented in this form). Because <span class="math inline">\(y_i^2\)</span> is always positive, the sign of this expression depends entirely on the <span class="math inline">\(\lambda_i\)</span>’s. If all <span class="math inline">\(\lambda_i &gt; 0\)</span>, then the matrix is positive definite; if all <span class="math inline">\(\lambda_i \geq 0\)</span>, it is positive semidefinite. Likewise, if all <span class="math inline">\(\lambda_i &lt; 0\)</span> or <span class="math inline">\(\lambda_i \leq 0\)</span>, then <span class="math inline">\(A\)</span> is negative definite or negative semidefinite, respectively. Finally, if <span class="math inline">\(A\)</span> has both positive and negative eigenvalues, it is indefinite.</p>
+<p>An application where eigenvalues and eigenvectors come up frequently is in maximizing some function of a matrix. In particular, for a matrix <span class="math inline">\(A \in \mathbb{S}^n\)</span>, consider the following maximization problem, <span class="math display">\[
+\max_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to} \|x\|_2^2 = 1
+\]</span> i.e., we want to find the vector (of norm <span class="math inline">\(1\)</span>) which maximizes the quadratic form. Assuming the eigenvalues are ordered as <span class="math inline">\(\lambda_1 \geq \lambda_2 \geq \dots \geq \lambda_n\)</span>, the optimal <span class="math inline">\(x\)</span> for this optimization problem is <span class="math inline">\(x_1\)</span>, the eigenvector corresponding to <span class="math inline">\(\lambda_1\)</span>. In this case the maximal value of the quadratic form is <span class="math inline">\(\lambda_1\)</span>. Similarly, the optimal solution to the minimization problem, <span class="math display">\[
+\min_{x \in \mathbb{R}^n} x^T A x \quad \text{subject to} \|x\|_2^2 = 1
+\]</span> is <span class="math inline">\(x_n\)</span>, the eigenvector corresponding to <span class="math inline">\(\lambda_n\)</span>, and the minimal value is <span class="math inline">\(\lambda_n\)</span>. This can be proved by appealing to the eigenvector-eigenvalue form of <span class="math inline">\(A\)</span> and the properties of orthogonal matrices. However, in the next section we will see a way of showing it directly using matrix calculus.</p>
+</div>
+<div id="the-gradient" class="section level2">
+<h2><strong>4.1 the gradient</strong></h2>
 </div>
 </div>
 
