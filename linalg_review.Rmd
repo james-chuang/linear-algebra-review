@@ -9,9 +9,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#**linear algebra review**
-
-This post goes through the [linear algebra review and reference section notes](http://cs229.stanford.edu/section/cs229-linalg.pdf) from the Stanford CS229 Machine Learning course. This is not meant to be comprehensive, it's things in the notes I didn't understand at first and things I thought were important.
+This is a post of my notes reviewing linear algebra, aggregating information mainly from the [linear algebra review and reference section notes](http://cs229.stanford.edu/section/cs229-linalg.pdf) from the Stanford CS229 Machine Learning course and Chapter 2 of the [Deep Learning Book](http://www.deeplearningbook.org/). In many (most) places, the material is directly transcribed from these sources. Rewriting it in LaTEX just helps me to slow down and better understand the content. The notes are not comprehensive, they contain the things that weren't immediately obvious to me (though this turns out to be most of the material).
 
 ##**2.1 vector-vector products**
 ### **inner (dot) product**
