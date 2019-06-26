@@ -1,8 +1,19 @@
 ---
+title: "Linear algebra review"
+author: James Chuang
+date: December 15, 2016
+mainfont: FreeSans
+linkcolor: "purple"
 output:
-  html_document:
-    fig_width: 4.5
-    css: /home/ebosi/github/james-chuang.github.io/_sass/_style.scss
+    pdf_document:
+        latex_engine: xelatex
+        toc: true
+        number_sections: false
+        fig_width: 4.5
+        df_print: tibble
+  # html_document:
+  #   fig_width: 4.5
+  #   css: /home/ebosi/github/james-chuang.github.io/_sass/_style.scss
 ---
 
 ```{r setup, include=FALSE}
@@ -15,11 +26,11 @@ This is a post of my notes reviewing linear algebra, aggregating information mai
 ### **inner (dot) product**
 Given $x,y \in \mathbb{R}^n$, $x^Ty \in \mathbb{R}$ is the ***inner product***, aka ***dot product***.
 $$
-\begin{align}
+\begin{aligned}
 x^Ty \in \mathbb{R} = \begin{bmatrix} x_1 & x_2 & \cdots & x_n \end{bmatrix} \begin{bmatrix} y_1 \\ y_2 \\ \vdots \\ y_n \end{bmatrix} & = \sum_{i=1}^{n}x_i y_i \\
 & = \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_n \end{bmatrix} \\
 & = y^Tx
-\end{align}
+\end{aligned}
 $$
 Therefore, $x^Ty = y^Tx$ is always true.
 
@@ -27,7 +38,7 @@ Therefore, $x^Ty = y^Tx$ is always true.
 Given $x \in \mathbb{R}^m, y \in \mathbb{R}^n$, $xy^T \in \mathbb{R}^{m \times n}$ is the ***outer product***.
 
 $$
-xy^T \in \mathbb{R}^{m \times n} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{bmatrix} \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} = 
+xy^T \in \mathbb{R}^{m \times n} = \begin{bmatrix} x_1 \\ x_2 \\ \vdots \\ x_m \end{bmatrix} \begin{bmatrix} y_1 & y_2 & \cdots & y_n \end{bmatrix} =
 \begin{bmatrix}
 x_1y_1 & x_1y_2 & \cdots & x_1y_n \\
 x_2y_1 & x_2y_2 & \cdots & x_2y_n \\
@@ -42,7 +53,7 @@ $$
 A = \begin{bmatrix}
     \mid  & \mid  &         & \mid  \\
     x     & x     & \cdots  & x     \\
-    \mid  & \mid  &         & \mid  
+    \mid  & \mid  &         & \mid
     \end{bmatrix}
   = \begin{bmatrix}
   x_1     &   x_1     & \cdots  & x_1     \\
@@ -62,7 +73,7 @@ $$
 The [Deep Learning Book](http://www.deeplearningbook.org/) section 2.1 describes the use of an unconventional notation called *broadcasting* where the addition of a matrix and a vector to yield another matrix is allowed: $C = A + b$, where $C_{i,j} = A_{i,j} + b_j$. $\left( C \in \mathbb{R}^{m \times n}, A \in \mathbb{R}^{m \times n}, b \in \mathbb{R}^n \right)$ Explicitly writing this out:
 
 $$
-\begin{align}
+\begin{aligned}
 C = \begin{bmatrix}
     A_{1,1} & A_{1,2} & \cdots  & A_{1,n} \\
     A_{2,1} & A_{2,2} & \cdots  & A_{2,n} \\
@@ -86,7 +97,7 @@ C = \begin{bmatrix}
     \end{bmatrix} \\
     & = A + (b \mathbf{1}^T)^T \\
     & = A + 1b^T
-\end{align}
+\end{aligned}
 $$
 So, the shorthand $C = A + b$ can be written more explicitly (but still pretty compactly) as $C = A + \mathbf{1}b^T$, where $\mathbf{1} \in \mathbb{R}^m$
 
@@ -157,7 +168,6 @@ arrows(11,-8,10,-10, length = .15, lwd=3, col="red")
 ```
 Here $y = Ax = \begin{bmatrix} 10 \\ -10  \end{bmatrix} = \begin{bmatrix}4 \\ -2 \end{bmatrix}(3) + \begin{bmatrix}1 \\ 2 \end{bmatrix}(-2)$, representing the point in $\mathbb{R}^m$ reached after taking $x_1=3$ "steps" of $a_1=\begin{bmatrix}4 \\ -2 \end{bmatrix}$ drawn as black vectors plus $x_2=-2$ "steps" of $a_2=\begin{bmatrix}1 \\ 2 \end{bmatrix}$ drawn as red vectors.
 
-##
 Analogous cases occur in the left multiplication of a matrix by a row vector, $y^T=x^TA$ for $A \in \mathbb{R}^{m \times n}, x \in \mathbb{R}^m$, and $y \in \mathbb{R}^n$.
 $$
 y^T = x^TA = x^T \begin{bmatrix}
@@ -170,7 +180,7 @@ $$
 Showing that the $i$th entry of $y^T$ is the inner product of $x$ and the $i$th column of A.
 
 $$
-\begin{align}
+\begin{aligned}
 y^T & = x^TA \\
     & = \begin{bmatrix}x_1 & x_2 & \cdots & x_n \end{bmatrix}
     \begin{bmatrix}
@@ -183,7 +193,7 @@ y^T & = x^TA \\
       + x_2 \begin{bmatrix}-& a_2^T & - \end{bmatrix}
       + \dots
       + x_n \begin{bmatrix}-& a_n^T & - \end{bmatrix}
-\end{align}
+\end{aligned}
 $$
 So $y^T$ is a linear combination of the rows of $A$, where the coefficients of the linear combination are given by the entries of $x$.
 
@@ -206,7 +216,7 @@ C = AB =  \begin{bmatrix}
           - & a_1^T   & - \\
           - & a_2^T   & - \\
             & \vdots  &   \\
-          - & a_m^T   & - 
+          - & a_m^T   & -
           \end{bmatrix}
           \begin{bmatrix}
           \mid  & \mid  &         & \mid  \\
@@ -218,7 +228,7 @@ C = AB =  \begin{bmatrix}
           a_1^Tb_1  & a_1^Tb_2  & \cdots  & a_1^Tb_p  \\
           a_2^Tb_1  & a_2^Tb_2  & \cdots  & a_2^Tb_p  \\
           \vdots    & \vdots    & \ddots  & \vdots    \\
-          a_m^Tb_1  & a_m^Tb_2  & \cdots  & a_m^Tb_p 
+          a_m^Tb_1  & a_m^Tb_2  & \cdots  & a_m^Tb_p
           \end{bmatrix}
 $$
 
@@ -233,7 +243,7 @@ C = AB =  \begin{bmatrix}
           - & b_1^T   & - \\
           - & b_2^T   & - \\
             & \vdots  &   \\
-          - & b_m^T   & - 
+          - & b_m^T   & -
           \end{bmatrix}
           = \sum_{i=1}^n a_i b_i^T
 $$
@@ -261,15 +271,15 @@ C = AB = \begin{bmatrix}
           - & a_1^T   & - \\
           - & a_2^T   & - \\
             & \vdots  &   \\
-          - & a_m^T   & - 
+          - & a_m^T   & -
           \end{bmatrix}
           B
-          = 
+          =
           \begin{bmatrix}
           - & a_1^TB  & - \\
           - & a_2^TB  & - \\
             & \vdots  &   \\
-          - & a_m^TB  & - 
+          - & a_m^TB  & -
           \end{bmatrix}
 $$
 
@@ -291,7 +301,7 @@ A square matrix $A \in \mathbb{R}^{n \times n}$ is ***symmetric*** if $A=A^T$. I
 
 For any matrix $A \in \mathbb{R}^{n \times n}$, the matrix $A + A^T$ is symmetric:
 $$
-\begin{align}
+\begin{aligned}
 A + A^T & = \begin{bmatrix}
             A_{1,1} & A_{1,2} & \cdots  & A_{1,n} \\
             A_{2,1} & A_{2,2} & \cdots  & A_{2,n} \\
@@ -311,7 +321,7 @@ A + A^T & = \begin{bmatrix}
             \vdots  & \vdots  & \ddots            & \vdots                      \\
             A_{n,1} + A_{1,n} & A_{n,2} + A_{2,n} & \cdots  & 2A_{n,n}
             \end{bmatrix}
-\end{align}
+\end{aligned}
 $$
 , which is symmetric due to commutativity of addition.
 
@@ -367,7 +377,7 @@ $$
 $$
 
 ## **3.6 linear independence and rank**
-A set of vectors $\{x_1, x_2, \dots, x_n \} \subset \mathbb{R}^m$ is ***linearly independent*** if no vector can be represented as a linear combination of the remaining vectors. That is, if 
+A set of vectors $\{x_1, x_2, \dots, x_n \} \subset \mathbb{R}^m$ is ***linearly independent*** if no vector can be represented as a linear combination of the remaining vectors. That is, if
 $$
 x_n = \sum_{i=1}^{n-1}\alpha_i x_i
 $$
@@ -406,12 +416,12 @@ Two vectors $x,y \in \mathbb{R}^n$ are ***orthogonal*** if $x^Ty = 0$ (thinking 
 A square matrix $U \in \mathbb{R}^{n \times n}$ is ***orthogonal*** if all its columns are ***orthonormal*** each other, i.e. the columns are orthogonal to each other and normalized. Using the definitions of orthogonality and normality,
 
 $$
-\begin{align}
+\begin{aligned}
 U^T U & = \begin{bmatrix}
           - & u_1^T   & - \\
           - & u_2^T   & - \\
             & \vdots  &   \\
-          - & u_n^T   & - 
+          - & u_n^T   & -
           \end{bmatrix}
           \begin{bmatrix}
           \mid  & \mid  &         & \mid  \\
@@ -422,16 +432,16 @@ U^T U & = \begin{bmatrix}
           u_1^Tu_1  & u_1^Tu_2  & \cdots  & u_1^Tu_n  \\
           u_2^Tu_1  & u_2^Tu_2  & \cdots  & u_2^Tu_n  \\
           \vdots    & \vdots    & \ddots  & \vdots    \\
-          u_n^Tb_1  & u_n^Tu_2  & \cdots  & u_m^Tu_n 
+          u_n^Tb_1  & u_n^Tu_2  & \cdots  & u_m^Tu_n
           \end{bmatrix} \\
       & = \begin{bmatrix}
           1       & 0       & \cdots  & 0       \\
           0       & 1       & \cdots  & 0       \\
-          \vdots  & \vdots  & \ddots  & \vdots  \\ 
+          \vdots  & \vdots  & \ddots  & \vdots  \\
           0       & 0       & \cdots  & 1
           \end{bmatrix} \\
       & = I
-\end{align}
+\end{aligned}
 $$
 
 Similarly, $I = UU^T$, so
@@ -480,7 +490,7 @@ The ***determinant*** of a square matrix $A \in \mathbb{R}^{n \times n}$ is a fu
 Given a matrix
 $$
 \begin{bmatrix}
-- & a_1^T   & - \\  
+- & a_1^T   & - \\
 - & a_2^T   & - \\
   & \vdots  &   \\
 - & a_n^T   & -
@@ -501,7 +511,7 @@ Algebraically, the determinant satisfies the following three properties:
 2.  Given a matrix $A \in \mathbb{R}^{n \times n}$, if we multiply a single row in $A$ by a scalar $t \in \mathbb{R}$, then the determinant of the new matrix is $t|A|$,
 $$
 \left|  \begin{bmatrix}
-        - & ta_1^T  & - \\  
+        - & ta_1^T  & - \\
         - & a_2^T   & - \\
           & \vdots  &   \\
         - & a_n^T   & -
@@ -513,7 +523,7 @@ $$
 3. If we exchange any two rows $a_i^T$ and $a_j^T$ of $A$, then the determinant of the new matrix is $-|A|$, for example
 $$
 \left|  \begin{bmatrix}
-        - & a_2^T  & - \\  
+        - & a_2^T  & - \\
         - & a_1^T   & - \\
           & \vdots  &   \\
         - & a_n^T   & -
@@ -530,19 +540,19 @@ Several properties that follow from the three properties above include:
 
 In order to define the determinant, it is useful to define, for $A \in \mathbb{R}^{n \times n}$, the matrix $A_{\backslash i,\backslash j} \in \mathbb{R}^{(n-1)\times(n-1)}$ to be the matrix that results from deleting the $i$th row and the $j$th column from $A$. The determinant of this matrix is called the $(i,j)$***minor*** of $A$, sometimes denoted $M_{ij}$ (i.e. $|A_{\backslash i,\backslash j}|= M_{ij}$).  The general (recursive) formula for the determinant is
 $$
-\begin{align}
+\begin{aligned}
 |A| & = \sum_{i=1}^n (-1)^{i+j} A_{ij}|A_{\backslash i,\backslash j}| = \sum_{i=1}^n (-1)^{i+j} A_{ij} M_{ij} &&(\text{for any } j \in 1, \dots, n) \\
     & = \sum_{j=1}^n (-1)^{i+j} A_{ij}|A_{\backslash i,\backslash j}| = \sum_{j=1}^n (-1)^{i+j} A_{ij} M_{ij} &&(\text{for any } i \in 1, \dots, n)
-\end{align}
+\end{aligned}
 $$
 with the initial case that $|A|=A_{11}$ for $A \in \mathbb{R}^{1 \times 1}$. The formula expanded completely for $A \in \mathbb{R}^{n \times n}$ would have a total of $n!$ different terms, so it's usually never written out explicitly.
 
 The ***classical adjoint*** (aka the ***adjugate*** matrix) of a matrix $A \in \mathbb{R}^{n \times n}$, is denoted $\text{adj}(A)$, and defined as
 $$
-\begin{align}
+\begin{aligned}
 \text{adj}(A) \in \mathbb{R}^{n \times n}, (\text{adj}(A))_{ij}  & = (-1)^{i+j}|A_{\backslash j, \backslash i}| \\
 & = (-1)^{i+j}M_{ji}
-\end{align}
+\end{aligned}
 $$
 Note the switch in the indices $M_{ji}$. This is because the classical adjoint is the transpose of the cofactor matrix $C \in \mathbb{R}^{n \times n}, C_{ij}=(-1)^{i+j}M_{ij}$.
 
@@ -775,13 +785,13 @@ f(x) = \sum_{i=1}^n \sum_{j=1}^n A_{ij}x_i x_j
 $$
 (see section 3.11). To take the partial derivative, we'll consider the terms including $x_k$ and $x_k^2$ factors separately:
 $$
-\begin{align}
+\begin{aligned}
 \frac{\partial f(x)}{\partial x_k} & =  \frac{\partial}{\partial x_k} \sum_{i=1}^n \sum_{j=1}^n A_{ij}x_i x_j \\
 & = \frac{\partial}{\partial x_k} \left[\sum_{i \neq k} \sum_{j \neq k}A_{ij}x_ix_j + \sum_{i \neq k}A_{ik}x_ix_k + \sum_{j \neq k} A_{kj}x_kx_j + A_{kk}x_k^2 \right] \\
 & = \sum_{i \neq k}A_{ik}x_i + \sum_{j \neq k} A_{kj}x_j + 2A_{kk}x_k \\
 & = \sum_{i=1}^n A_{ik}x_i + \sum_{j=1}^n A_{kj}x_j \\
 & = 2 \sum_{i=1}^n A_{ki} x_i
-\end{align}
+\end{aligned}
 $$
 where the last equality follows since $A$ is symmetric (which we can safely assume, since it is appearing in a quadratic form). Note that the $k$th entry of $\nabla_x f(x)$ is just the inner product of the $k$th row of $A$ and $x$. Therefore, $\nabla_x x^TAx = 2Ax$. Again, this is analogous to single-variable calculus, where $\frac{\partial}{\partial x}ax^2 = 2ax$.
 
